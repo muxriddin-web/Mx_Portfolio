@@ -99,6 +99,10 @@ app.get("/portfolio", (req, res) => {
 // ===========================
 app.use("/api/contact", contactRoutes);
 
+// Ping uchun marshrut
+app.get("/ping", (req, res) => {
+    res.status(200).send("I am awake!");
+});
 // ===========================
 // 404
 // ===========================
