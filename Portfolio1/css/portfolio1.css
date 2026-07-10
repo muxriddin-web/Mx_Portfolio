@@ -1,0 +1,723 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'); */
+/* shrift portflio */
+/* @import url('/type/pricedown\ bl.otf'); */
+/* SHRIFT ULASH */
+@font-face {
+    font-family: 'Pricedown';
+    src: url('./type/pricedown bl.otf') format('opentype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* HAMMA SAHIFA UCHUN */
+body{
+    font-family: 'Pricedown', sans-serif !important;
+    background-color: rgb(32,30,32);
+    color: #ffffff !important; /* shrift rangi */
+    min-height:100vh;
+    overflow-x:hidden;
+    padding-bottom:90px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(42, 43, 41, 0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.1s ease;
+}
+
+/* Navbar */
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #eb0afb;
+}
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:70px;
+
+  padding:0 30px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  background:rgba(20,20,20,0.7);
+
+  backdrop-filter:blur(10px);
+
+  z-index:999999;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  color: #ece7e4;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+}
+.glow-link::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: -4px;
+    height: 2px;
+    background: rgba(235, 10, 251, 0.95);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: 0.3s ease;
+}
+
+.glow-link:hover::after,
+.glow-link.active::after {
+    transform: scaleX(1);
+}
+
+/* Glowing Effects */
+.glow-text {
+  text-shadow: 0 0 10px rgb(13, 49, 22);
+}
+
+.glow-button {
+  padding: 0.4rem 2.2rem;
+  border: none;
+  border-radius: 5px;
+  background: rgba(88, 3, 97, 0.95);
+  color: rgba(255, 255, 255, 0.901);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 0 20px rgba(57, 57, 57, 0.95);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.glow-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(155, 123, 207, 0.95);
+}
+
+.glow-button.outline {
+  background: transparent;
+  border: 2px solid rgba(114, 88, 88, 0.95);
+  color: rgba(255, 255, 255, 0.779);
+}
+
+.glow-icon {
+  color: rgb(149, 149, 149);
+  font-size: 1.5rem;
+  transition: all 0.3s;
+}
+
+.glow-icon:hover {
+  text-shadow: 0 0 10px rgba(252, 181, 181, 0.95);
+  transform: scale(1.1);
+  width: 100%;
+}
+
+/* =========================================================
+   GTA 3D PARALLAX & REAL GUNFIRE — SCROLL-REVEAL TEXNIKASI
+   Home bo'limi ustki "parda" (main-content) bo'lib skroll bilan
+   yuqoriga suriladi, ostida esa position:fixed .gta-reveal-footer
+   (3D sahna, qurol otish animatsiyasi, HUD savol-paneli) ochiladi.
+   ========================================================= */
+
+/* Home Section — USTKI PARDA */
+.home {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, #14151f 0%, #2a2b3d 100%);
+  min-height: 150vh;
+  min-height: 150dvh;
+  /* SCROLL UCHUN ENG MUHIM JOY: pastdan gta-reveal-footer balandligidek joy qoldiramiz */
+  margin-bottom: 100vh;
+  margin-bottom: 100dvh;
+  box-shadow: 0 20px 50px rgba(0,0,0,1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* REVEAL FOOTER (ORQADAGI 3D O'YIN HUDUDI) */
+.gta-reveal-footer {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100vw; height: 100vh;
+  height: 100dvh;
+  z-index: 1;
+  background: #05050a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px;
+  overflow: hidden;
+  padding: 15px;
+}
+
+/* Kamera titrash effekti (O'q uzilganda ishlaydi) */
+.screen-shake { animation: shakeCamera 0.3s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shakeCamera {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  10%, 90% { transform: translate3d(-10px, 5px, 0); }
+  20%, 80% { transform: translate3d(10px, -5px, 0); }
+  30%, 50%, 70% { transform: translate3d(-15px, 10px, 0); }
+  40%, 60% { transform: translate3d(15px, -10px, 0); }
+}
+
+.parallax-bg {
+  position: absolute;
+  width: 120%; height: 120%;
+  top: -10%; left: -10%;
+  background: radial-gradient(circle, rgba(40,20,50,0.9) 0%, rgba(5,5,10,1) 100%);
+  z-index: 1;
+  transition: transform 0.1s ease-out;
+}
+
+/* 3D SAHNA VA QAHRAMON */
+.scene-3d {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  transform-style: preserve-3d;
+  gap: 20px;
+}
+
+.character-container {
+  position: relative;
+  width: 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+
+.hologram-man {
+  width: 100%;
+  max-width: 550px;
+  border: 4px solid #eb0afb;
+  top: 20%;
+  border-radius: 10px;
+  height: 400px;
+  display: block;
+  margin: 0 auto;
+  transform: translateZ(200px) scale(1.1);
+  filter: drop-shadow(0 0 25px rgba(0, 238, 255, 0.4));
+  animation: floatEffect 4s ease-in-out infinite;
+}
+
+@keyframes floatEffect {
+  0%, 100% { transform: translateZ(200px) translateY(0px) scale(1.1); }
+  50% { transform: translateZ(220px) translateY(-10px) scale(1.12); filter: drop-shadow(0 0 40px rgba(0, 238, 255, 0.6)); }
+}
+
+/* QUROL TESHIGIDAGI MILTILASH EFFEKTI */
+.barrel-glow-effect {
+  position: absolute;
+  top: 51%;
+  left: 32%;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffffff, 0 0 25px #ffdd00;
+  opacity: 0;
+  /* Rasm translateZ(200px)da turgani uchun effektni ham xuddi shu chuqurlikka
+     (yoki undan oldinroqqa) chiqaramiz, aks holda 3D fazoda rasm orqasida qoladi */
+  transform: translate(-50%, -50%) translateZ(220px);
+  z-index: 11;
+  mix-blend-mode: screen;
+}
+
+.glow-active { animation: flickerGlow 0.25s ease-out; }
+
+@keyframes flickerGlow {
+  0%   { opacity: 0; transform: translate(-50%, -50%) translateZ(220px) scale(0.5); }
+  20%  { opacity: 1; transform: translate(-50%, -50%) translateZ(220px) scale(1.8); }
+  40%  { opacity: 0.2; transform: translate(-50%, -50%) translateZ(220px) scale(0.8); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) translateZ(220px) scale(1.5); }
+  80%  { opacity: 0.5; transform: translate(-50%, -50%) translateZ(220px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) translateZ(220px) scale(0.5); }
+}
+
+/* MUKAMMAL OLOV EFFEKTI (MUZZLE FLASH) */
+.muzzle-flash {
+  position: absolute;
+  top: 51%;
+  left: 32%;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, #ffffff 15%, #ffcc00 35%, #ff3300 60%, transparent 80%);
+  box-shadow:
+    inset 0 0 20px #ffffff,
+    0 0 30px #ffffff,
+    0 0 80px #ffaa00,
+    0 0 150px #ff0000;
+  border-radius: 50%;
+  opacity: 0;
+  /* Xuddi shu sababdan olov effekti ham oldinga (rasm oldiga) chiqarildi */
+  transform: translate(-50%, -50%) translateZ(220px) scale(0) rotate(0deg);
+  z-index: 10;
+  mix-blend-mode: screen;
+}
+
+/* MUKAMMAL 3D O'Q */
+.real-3d-bullet {
+  position: absolute;
+  top: 51%;
+  left: 32%;
+  width: 25px;
+  height: 25px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #ffffff, 0 0 50px #ffaa00, 0 0 100px #ff0055;
+  opacity: 0;
+  z-index: 100;
+  /* Boshlang'ich Z chuqurlik rasmnikidan (200px) oldinroq qilib qo'yildi */
+  transform: translate(-50%, -50%) translate3d(0, 0, 220px) scale(1);
+}
+
+/* OTISH ANIMATSIYALARI */
+.shoot-flash-on { animation: flashBoom 0.15s ease-out; }
+.shoot-bullet-on { animation: bulletOut 0.4s cubic-bezier(0.2, 0.8, 0.3, 1) forwards; }
+
+@keyframes flashBoom {
+  0% { opacity: 1; transform: translate(-50%, -50%) translateZ(220px) scale(2) rotate(45deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) translateZ(220px) scale(0) rotate(90deg); }
+}
+
+@keyframes bulletOut {
+  0% { opacity: 1; transform: translate(-50%, -50%) translate3d(0, 0, 220px) scale(1); filter: blur(0px); }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(800px, -150px, 1420px) scale(20);
+    filter: blur(8px);
+  }
+}
+
+/* SAVOL PANELI (HUD) */
+.gta-hud-container {
+  width: 45%;
+  background: rgba(10, 10, 15, 0.95);
+  border: 4px solid #eb0afb;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 0 40px rgba(0, 255, 234, 0.2);
+  color: #fff;
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  transform: rotateY(-10deg) translateZ(50px);
+  transition: transform 0.1s ease-out;
+}
+
+.hud-title { font-size: 3rem; color: #ffff00; margin: 0 0 20px 0; text-shadow: 3px 3px 0px #000; letter-spacing: 2px; }
+.hud-desc { font-size: 1.2rem; font-family: Arial, sans-serif; color: #dcdcdc; line-height: 1.6; margin-bottom: 35px; }
+.btn-wrapper { display: flex; gap: 20px; }
+
+.hud-btn {
+  position: relative;
+  flex: 1; padding: 18px 14px; min-height: 58px; font-size: 1.5rem; font-family: 'Impact', sans-serif;
+  border: none; cursor: pointer; letter-spacing: 2px; transition: all 0.2s;
+  border-radius: 4px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.hud-btn:hover { transform: scale(1.05); }
+.btn-yes { background: #00ff66; color: #000; box-shadow: 0 0 20px rgba(0,255,102,0.4); }
+.btn-no { background: #ff0055; color: #fff; box-shadow: 0 0 20px rgb(255, 0, 85); }
+
+/* QONLI EKRAN (WASTED) */
+.wasted-active { animation: bloodScreen 0.5s ease-in forwards; }
+@keyframes bloodScreen {
+  0% { background: #05050a; }
+  100% { background: radial-gradient(circle, rgb(255, 0, 25) 0%, rgb(255, 1, 1) 100%); }
+}
+
+.particle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 70%);
+  opacity: 1;
+  background-image: url(../imges/fonr.png);
+  background-size: 100% 100%;
+}
+
+.content {
+  text-align: center;
+  z-index: 2;
+}
+
+/* Glitch Effect */
+.glitch {
+  font-size: 4rem;
+  text-shadow: 0.05em 0 0 rgb(23, 10, 42),
+              -0.05em -0.025em 0 rgb(98, 1, 255);
+  animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Typing Effect */
+.typing-text::after {
+  content: '|';
+  animation: blink 1s infinite;
+}
+.typing-text {
+  font-size: 1.3rem;
+}
+
+@keyframes blink {
+  50% { opacity: 1; }
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* Pastga skroll qilish belgisi — Home bilan birga tabiiy skroll bo'ladi */
+.scroll-arrow {
+  font-size: 1.5rem;
+  color: #888;
+  margin-top: 50px;
+  letter-spacing: 2px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-15px); }
+}
+
+h1,h2,h3,h4,h5,h6,p{
+  margin: 0;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 30px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 9998;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Notification */
+.notification {
+  position: fixed;
+  top: 90px;
+  right: 30px;
+  background: rgba(20, 20, 20, 0.9);
+  border-left: 4px solid rgba(235, 10, 251, 0.95);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  transform: translateX(150%);
+  transition: transform 0.4s ease;
+  z-index: 99999;
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes navFade {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+[data-aos] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page {
+  display: none;
+  min-height: 100vh;
+}
+
+/* default home ochiq bo‘ladi */
+#home-page {
+    display: flex;
+}
+
+/* =========================================================
+   RESPONSIVE / MOBIL MOSLASHUV
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .hud-title { font-size: 2.4rem; }
+  .hud-desc { font-size: 1.05rem; margin-bottom: 25px; }
+  .gta-hud-container { padding: 28px; }
+}
+
+/* PLANSHET / TABLET - sahna vertikal bo'linadi */
+@media (max-width: 860px) {
+  .gta-reveal-footer { perspective: none; padding: 10px; }
+
+  .scene-3d {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-height: 100%;
+    gap: 12px;
+    overflow: hidden;
+  }
+
+  .character-container,
+  .gta-hud-container {
+    width: 92%;
+    max-width: 480px;
+  }
+
+  .character-container { order: 1; }
+  .gta-hud-container { order: 2; transform: none !important; }
+
+  .hologram-man {
+    max-width: 260px;
+    transform: translateZ(0) scale(1);
+    animation: floatEffectMobile 4s ease-in-out infinite;
+  }
+
+  @keyframes floatEffectMobile {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-8px) scale(1.02); filter: drop-shadow(0 0 40px rgba(247, 0, 255, 0.6)); }
+  }
+
+  .gta-hud-container {
+    padding: 20px;
+    border-width: 2px;
+  }
+
+  .hud-title { font-size: 1.6rem; letter-spacing: 1px; margin-bottom: 12px; }
+  .hud-desc { font-size: 0.95rem; line-height: 1.4; margin-bottom: 20px; }
+  .btn-wrapper { gap: 12px; }
+  .hud-btn { padding: 14px 8px; font-size: 1.05rem; letter-spacing: 1px; }
+
+  .muzzle-flash { width: 90px; height: 90px; }
+  .real-3d-bullet { width: 16px; height: 16px; }
+  .barrel-glow-effect { width: 8px; height: 8px; }
+
+  @keyframes bulletOut {
+    0% { opacity: 1; transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) translate3d(200px, -60px, 400px) scale(10);
+      filter: blur(6px);
+    }
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    body {
+        padding-top: 0;
+        padding-bottom: 65px;
+    }
+
+    .navbar {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        height: 65px;
+        padding: 0;
+        justify-content: center;
+        background: #111;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: none;
+        backdrop-filter: none;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .nav-links {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        gap: 0;
+    }
+
+    .nav-links li {
+        flex: 1;
+        height: 100%;
+    }
+
+    .nav-links a {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.7);
+        padding: 0;
+    }
+
+    .nav-links a i {
+        font-size: 20px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: #eb0afb;
+    }
+
+    /* Back to top — navbar pastda bo'lganda yuqoriroq */
+    .back-to-top {
+        bottom: 80px;
+    }
+
+    .glitch {
+        font-size: 2.4rem;
+    }
+
+    .typing-text {
+        font-size: 1.3rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .glow-button {
+        width: 350px;
+        text-align: center;
+    }
+
+    .home {
+        padding: 30px 18px;
+    }
+
+    .scroll-arrow {
+        font-size: 1.1rem;
+        margin-top: 30px;
+    }
+}
+
+/* KICHIK TELEFONLAR */
+@media (max-width: 480px) {
+    .character-container,
+    .gta-hud-container { width: 96%; top: 30%;}
+
+    .hologram-man { max-width: 380px; 
+      border: 4px solid rgb(204, 2, 255);
+      border-radius: 10px;
+    }
+
+    .hud-title { font-size: 1.3rem; }
+    .hud-desc { font-size: 0.85rem; margin-bottom: 16px; }
+    .btn-wrapper { flex-direction: column; gap: 10px; }
+    .hud-btn { padding: 14px; font-size: 1rem; width: 100%; }
+
+    .gta-hud-container { padding: 16px;}
+
+    .glitch {
+        font-size: 1.8rem;
+    }
+
+    .typing-text {
+        font-size: 1.3rem;
+    }
+}
+
+/* JUDA PAST BALANDLIKDAGI EKRANLAR (masalan gorizontal telefon) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .scene-3d { flex-direction: row; gap: 10px; }
+  .character-container { width: 40%; }
+  .gta-hud-container { width: 55%; padding: 14px; }
+  .hologram-man { max-width: 140px; }
+  .hud-title { font-size: 1.1rem; margin-bottom: 8px; }
+  .hud-desc { font-size: 0.75rem; margin-bottom: 10px; }
+  .hud-btn { padding: 8px; font-size: 0.85rem; }
+  .btn-wrapper { flex-direction: row; }
+}

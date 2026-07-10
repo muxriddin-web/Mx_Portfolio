@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - About</title>
+    <link rel="icon" type="image/svg+xml" href="./logosvg/rockstar-games.svg"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/about.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="./portfolio1.html" class="logo">PORTFOLIO VI</a>
+        <ul class="nav-links">
+            <li>
+                <a href="./portfolio1.html" class="glow-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="./about.html" class="glow-link">
+                    <i class="fas fa-user"></i>
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="./skills.html" class="glow-link">
+                    <i class="fas fa-code"></i>
+                    <span>Skills</span>
+                </a>
+            </li>
+            <li>
+                <a href="./projects.html" class="glow-link">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="./contact.html" class="glow-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <!-- ABOUT SECTION -->
+    <section id="about-page" class="about">
+        <h2 class="section-title">About Me</h2>
+
+        <div class="about-content">
+
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <img src="./imges/gtaimg01.png" alt="Profile Photo">
+                <p class="profile-name">Muxriddin_O'tkirov</p>
+                <div class="social-links">
+
+                    <a href="https://github.com/muxriddin-web" target="_blank" rel="noopener noreferrer" class="glow-icon">
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/muxriddin-o-tkirov-451728420" target="_blank" rel="noopener noreferrer" class="glow-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+
+                    <a href="https://t.me/M_FS_Developer" target="_blank" rel="noopener noreferrer" class="glow-icon">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="https://facebook.com/username" target="_blank" rel="noopener noreferrer" class="glow-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+                    <!-- X (Twitter) -->
+                    <a href="https://x.com/username" target="_blank" rel="noopener noreferrer" class="glow-icon">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- About Text + Stats -->
+            <div class="about-text">
+                <p>
+                    Junior Full Stack Developer passionate about building modern, responsive, and user-friendly web applications. I enjoy turning ideas into real digital products through clean code, thoughtful design, and continuous learning.
+                </p>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3><span class="counter" data-target="20">0</span>+</h3>
+                        <p>Projects</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3><span class="counter" data-target="5">0</span>+</h3>
+                        <p>Clients</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3><span class="counter" data-target="3">0</span>+</h3>
+                        <p>Years</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- GTA REVEAL FOOTER — About bo'limi skroll bilan yuqoriga surilganda ostidan ochiladi -->
+    <div class="gta-reveal-footer" id="gta-overlay">
+        <div id="p-bg" class="parallax-bg"></div>
+
+        <div class="scene-3d" id="scene-container">
+            <div id="p-char" class="character-container">
+                <img class="hologram-man" src="./imges/Scrollimg2.png" alt="Gunman" />
+
+                <div id="barrel-glow" class="barrel-glow-effect"></div>
+
+                <div id="flash-effect" class="muzzle-flash"></div>
+                <div id="bullet-effect" class="real-3d-bullet"></div>
+            </div>
+
+            <div id="p-hud" class="gta-hud-container">
+                <h1 class="hud-title">MISSION:  Question yes or no</h1>
+                <p class="hud-desc">Was my portfolio up to your expectations?</p>
+
+                <div class="btn-wrapper">
+                    <button id="yes-trigger" class="hud-btn btn-yes">Yes of course</button>
+                    <button id="no-trigger" class="hud-btn btn-no">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/about.js"></script>
+
+</body>
+</html>
