@@ -54,7 +54,13 @@ app.use(morgan("dev"));
 // ===========================
 // CORS
 // ===========================
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000', // local test uchun
+    'https://mfs-portfoliouz.netlify.app' // Netlify silkasi
+  ],
+  credentials: true
+}));
 
 // ===========================
 // RATE LIMIT
