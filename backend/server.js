@@ -56,7 +56,7 @@ app.use(morgan("dev"));
 // ===========================
 app.use(cors({
   origin: [
-    'http://localhost:3000', // local test uchun
+    'http://localhost:5000', // local test uchun
     'https://mfs-portfoliouz.netlify.app' // Netlify silkasi
   ],
   credentials: true
