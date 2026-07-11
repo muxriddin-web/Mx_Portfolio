@@ -16,7 +16,6 @@ const app = express();
 // ===========================
 // SECURITY
 // ===========================
-// app.use(helmet());
 app.use(
     helmet({
         contentSecurityPolicy: {
@@ -41,6 +40,7 @@ app.use(
         }
     })
 );
+
 // ===========================
 // COMPRESS RESPONSE
 // ===========================
@@ -56,22 +56,14 @@ app.use(morgan("dev"));
 // ===========================
 app.use(cors({
   origin: [
-    'http://localhost:5000', // local test uchun
-    'https://mfs-portfoliouz.netlify.app' // Netlify silkasi
+    'http://localhost:5000',
+    'https://mfs-portfoliouz.netlify.app'
   ],
   credentials: true
 }));
 
 // ===========================
-// RATE LIMIT
-// ===========================
-// ===========================
-// API
-// ===========================
-app.use("/api/contact", limiter, contactRoutes);
-
-// ===========================
-// BODY PARSER
+// BODY PARSER (bu ENDI API route'lardan OLDIN bo'lishi shart)
 // ===========================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -98,14 +90,15 @@ app.get("/portfolio", (req, res) => {
 });
 
 // ===========================
-// API
+// API (bitta marta, limiter bilan)
 // ===========================
-app.use("/api/contact", contactRoutes);
+app.use("/api/contact", limiter, contactRoutes);
 
 // Ping uchun marshrut
 app.get("/ping", (req, res) => {
     res.status(200).send("I am awake!");
 });
+
 // ===========================
 // 404
 // ===========================
@@ -132,3 +125,8 @@ app.listen(PORT, () => {
     console.log(`🌐 http://localhost:${PORT}`);
     console.log("================================");
 });
+
+
+// git add .
+// git commit -m "resolve merge conflict in contact.js router"
+// git push origin main
