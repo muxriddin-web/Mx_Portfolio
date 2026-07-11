@@ -85,7 +85,7 @@ app.get("/", (req, res) => {
 // ===========================
 app.get("/portfolio", (req, res) => {
     res.sendFile(
-        path.join(__dirname, "../Portfolio1/portfolio1.html")
+        path.join(__dirname, "../Portfolio1/index.html")
     );
 });
 
