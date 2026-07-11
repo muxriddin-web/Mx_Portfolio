@@ -71,8 +71,10 @@ app.use(express.urlencoded({ extended: true }));
 // ===========================
 // STATIC FILES
 // ===========================
-app.use(express.static(path.join(__dirname, "../")));
-
+// app.use(express.static(path.join(__dirname, "../")));
+app.use(express.static(path.join(__dirname, "../"), {
+    maxAge: '7d' // 7 kun keshlash
+}));
 // ===========================
 // HOME
 // ===========================

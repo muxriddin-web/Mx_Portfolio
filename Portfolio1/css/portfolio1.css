@@ -6,7 +6,9 @@
     font-family: 'Pricedown';
     src: url('./type/pricedown bl.otf') format('opentype');
 }
-
+@view-transition {
+    navigation: auto;
+}
 * {
   margin: 0;
   padding: 0;
