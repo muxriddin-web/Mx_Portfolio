@@ -1,42 +1,17 @@
-const API_URL = "https://mx-portfolio.onrender.com"; // Render'dan olgan silkangiz
+const express = require("express");
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+const router = express.Router();
 
-    const button = form.querySelector(".glow-button");
+const validateContact = require("../middleware/validation");
 
-    const formData = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        message: document.getElementById("message").value.trim()
-    };
+const {
+    sendContact
+} = require("../controllers/contactController");
 
-    button.disabled = true;
-    button.textContent = "Sending...";
+router.post(
+    "/",
+    validateContact,
+    sendContact
+);
 
-    try {
-        const response = await fetch(`${API_URL}/api/contact`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || "Something went wrong.");
-        }
-
-        alert("✅ Message sent successfully!");
-        form.reset();
-
-    } catch (error) {
-        console.error(error);
-        alert(error.message);
-    } finally {
-        button.disabled = false;
-        button.textContent = "Send Message";
-    }
-});
+module.exports = router;

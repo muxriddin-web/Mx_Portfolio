@@ -1,3 +1,5 @@
+const API_URL = "https://mx-portfolio.onrender.com"; // Render'dan olgan backend silkangiz
+
 const form = document.getElementById("contact-form");
 
 form.addEventListener("submit", async (e) => {
@@ -16,7 +18,7 @@ form.addEventListener("submit", async (e) => {
 
     try {
 
-        const response = await fetch("/api/contact", {
+        const response = await fetch(`${API_URL}/api/contact`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
