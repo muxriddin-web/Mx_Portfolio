@@ -695,7 +695,7 @@ h1,h2,h3,h4,h5,h6,p{
 /* KICHIK TELEFONLAR */
 @media (max-width: 480px) {
     .character-container,
-    .gta-hud-container { width: 96%; top: 30%;}
+    .gta-hud-container { width: 86%; top: 30%;}
 
     .hologram-man { max-width: 380px; 
       border: 4px solid rgb(204, 2, 255);
@@ -707,7 +707,7 @@ h1,h2,h3,h4,h5,h6,p{
     .btn-wrapper { flex-direction: column; gap: 10px; }
     .hud-btn { padding: 14px; font-size: 1rem; width: 100%; }
 
-    .gta-hud-container { padding: 16px;}
+    .gta-hud-container { padding: 10px;}
 
     .glitch {
         font-size: 1.8rem;
