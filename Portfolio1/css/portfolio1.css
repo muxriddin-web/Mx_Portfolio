@@ -360,6 +360,7 @@ body{
   border-radius: 4px;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  z-index: 10;
 }
 .hud-btn:hover { transform: scale(1.05); }
 .btn-yes { background: #00ff66; color: #000; box-shadow: 0 0 20px rgba(0,255,102,0.4); }
@@ -458,7 +459,7 @@ h1,h2,h3,h4,h5,h6,p{
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
-  z-index: 9998;
+  z-index: 5; /* 9998 o'rniga 5 qilib o'zgartiring */
 }
 
 .back-to-top.visible {
