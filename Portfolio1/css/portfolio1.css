@@ -655,6 +655,7 @@ h1,h2,h3,h4,h5,h6,p{
     /* Back to top — navbar pastda bo'lganda yuqoriroq */
     .back-to-top {
         bottom: 80px;
+        margin: auto;
     }
 
     .glitch {
