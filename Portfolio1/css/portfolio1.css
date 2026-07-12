@@ -445,7 +445,6 @@ h1,h2,h3,h4,h5,h6,p{
   margin: 0;
 }
 
-/* Back to Top Button */
 .back-to-top {
   position: fixed;
   bottom: 2rem;
@@ -459,7 +458,7 @@ h1,h2,h3,h4,h5,h6,p{
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
-  z-index: 5; /* 9998 o'rniga 5 qilib o'zgartiring */
+  z-index: 5;
 }
 
 .back-to-top.visible {
@@ -655,8 +654,7 @@ h1,h2,h3,h4,h5,h6,p{
 
     /* Back to top — navbar pastda bo'lganda yuqoriroq */
     .back-to-top {
-        bottom: 80px;
-        margin: auto;
+       display: none !important;
     }
 
     .glitch {
