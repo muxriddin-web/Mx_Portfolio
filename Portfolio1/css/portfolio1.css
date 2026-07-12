@@ -661,7 +661,7 @@ h1,h2,h3,h4,h5,h6,p{
         pointer-events: none !important; /* Bosish imkoniyatini butunlay o'chiradi */
         position: absolute !important; /* Joylashuvini bekor qiladi */
         left: -9999px !important;      /* Ekrandan tashqariga chiqarib yuboradi */
-    }
+      }
 
     .glitch {
         font-size: 2.4rem;

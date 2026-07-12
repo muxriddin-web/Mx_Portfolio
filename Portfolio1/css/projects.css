@@ -320,7 +320,9 @@
                 gap: 1.5rem;
             }
 
-            
+            .project-card img {
+                height: 200px;
+            }
 
             /* Mobilda hover yo'q, info doim ko'rinsin */
             .project-info {
@@ -335,9 +337,7 @@
             .projects {
                 padding: 1rem 0.8rem 1.5rem;
             }
-            .project-card img {
-                height: 200px;
-            }
+
             .section-title {
                 font-size: 1.5rem;
             }
