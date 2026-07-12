@@ -129,6 +129,6 @@ app.listen(PORT, () => {
 });
 
 
-// git add .
-// git commit -m "resolve merge conflict in contact.js router"
-// git push origin main
+git add .
+git commit -m "resolve merge conflict in contact.js router"
+git push origin main
