@@ -445,6 +445,7 @@ h1,h2,h3,h4,h5,h6,p{
   margin: 0;
 }
 
+/* Asosiy uslublar */
 .back-to-top {
   position: fixed;
   bottom: 2rem;
@@ -654,7 +655,12 @@ h1,h2,h3,h4,h5,h6,p{
 
     /* Back to top — navbar pastda bo'lganda yuqoriroq */
     .back-to-top {
-       display: none !important;
+        display: none !important;      /* Elementni render qilishdan to'xtatadi */
+        visibility: hidden !important; /* Ko'rinishini yo'q qiladi */
+        opacity: 0 !important;         /* Shaffofligini 0 qiladi */
+        pointer-events: none !important; /* Bosish imkoniyatini butunlay o'chiradi */
+        position: absolute !important; /* Joylashuvini bekor qiladi */
+        left: -9999px !important;      /* Ekrandan tashqariga chiqarib yuboradi */
     }
 
     .glitch {
