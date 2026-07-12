@@ -1,155 +1,155 @@
-      @font-face {
-            font-family: 'Pricedown';
-            src: url('./type/pricedown bl.otf') format('opentype');
-        }
+@font-face {
+    font-family: 'Pricedown';
+    src: url('./type/pricedown bl.otf') format('opentype');
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Pricedown', sans-serif;
-            background-color: rgb(32, 30, 32);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding-top: 70px;
-            padding-bottom: 0;
-        }
+body {
+    font-family: 'Pricedown', sans-serif;
+    background-color: rgb(32, 30, 32);
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 70px;
+    padding-bottom: 0;
+}
 
-        /* =====================
-           NAVBAR
-        ===================== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(20, 20, 20, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 999999;
-        }
+/* =====================
+   NAVBAR
+===================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 999999;
+}
 
-        .logo {
-            font-size: 1.4rem;
-            color: #eb0afb;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
+.logo {
+    font-size: 1.4rem;
+    color: #eb0afb;
+    text-decoration: none;
+    letter-spacing: 2px;
+}
 
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-        }
+.nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+}
 
-        .nav-links a {
-            position: relative;
-            text-decoration: none;
-            color: #ece7e4;
-            font-size: 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 8px;
-            transition: color 0.3s;
-        }
+.nav-links a {
+    position: relative;
+    text-decoration: none;
+    color: #ece7e4;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    transition: color 0.3s;
+}
 
-        .nav-links a:hover {
-            color: #eb0afb;
-        }
+.nav-links a:hover {
+    color: #eb0afb;
+}
 
-        .glow-link::after {
-            content: '';
-            position: absolute;
-            left: 8px;
-            right: 8px;
-            bottom: -4px;
-            height: 2px;
-            background: rgba(235, 10, 251, 0.95);
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: 0.3s ease;
-        }
+.glow-link::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: -4px;
+    height: 2px;
+    background: rgba(235, 10, 251, 0.95);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: 0.3s ease;
+}
 
-        .glow-link:hover::after,
-        .glow-link.active::after {
-            transform: scaleX(1);
-        }
+.glow-link:hover::after,
+.glow-link.active::after {
+    transform: scaleX(1);
+}
 
-        /* =====================
-           PROJECTS SECTION
-        ===================== */
-        .projects {
-            padding: 3rem 2rem 4rem;
-            /* 100vh o'rniga 100dvh mobil qurilmalarda rasm sakrashini yo'qotadi */
-            min-height: calc(100dvh - 70px); 
-            background-image: url(../imges/fonr7.png);
-            
-            /* Rasmni eniga ham, boyiga ham aynan blok hajmiga (100%) majburlab qisqartiramiz/kattalashtiramiz */
-            background-size: 100% 100%; 
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+/* =====================
+   PROJECTS SECTION
+===================== */
+.projects {
+    padding: 3rem 2rem 4rem;
+    /* 100vh o'rniga 100dvh mobil qurilmalarda rasm sakrashini yo'qotadi */
+    min-height: calc(100dvh - 70px); 
+    background-image: url(../imges/fonr7.png);
+    
+    /* Rasmni eniga ham, boyiga ham aynan blok hajmiga (100%) majburlab qisqartiramiz/kattalashtiramiz */
+    background-size: 100% 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 2.5rem;
-            color: #fff;
-            text-shadow: 0 0 10px rgb(13, 49, 22);
-        }
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgb(13, 49, 22);
+}
 
-        /* =====================
-           FILTER BUTTONS
-        ===================== */
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
+/* =====================
+   FILTER BUTTONS
+===================== */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
 
-        .filter-btn {
-            padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            background: rgb(84, 49, 115);
-            color: #fff;
-            cursor: pointer;
-            font-family: 'Pricedown', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
+.filter-btn {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    background: rgb(84, 49, 115);
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Pricedown', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
 
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: rgba(140, 26, 240, 0.85);
-            color: #fff;
-            box-shadow: 0 0 15px rgb(140, 26, 240);
-            transform: translateY(-2px);
-        }
+.filter-btn.active,
+.filter-btn:hover {
+    background: rgba(140, 26, 240, 0.85);
+    color: #fff;
+    box-shadow: 0 0 15px rgb(140, 26, 240);
+    transform: translateY(-2px);
+}
 
-        /* =====================
-           PROJECTS GRID
-        ===================== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+/* =====================
+   PROJECTS GRID
+===================== */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
 .project-card {
     position: relative;
@@ -160,186 +160,190 @@
     margin-bottom: 20px; /* Kartalar orasida bo'shliq bo'lishi uchun */
 }
 
-.project-card img {
-    width: 100%;       /* Rasm doim konteyner kengligida bo'lsin */
-    height: 200px;     /* Balandlikni qat'iy belgilaymiz */
-    object-fit: cover; /* Rasm cho'zilib ketmaydi, qirqib moslanadi */
-    display: block;    /* Pastdagi bo'shliqni yo'qotadi */
+/* Rasm va Video ikkalasi ham konteyner ichida to'liq va mutanosib sig'ishi kerak */
+.project-card img,
+.project-card video {
+    width: 100%;        /* Doim konteyner kengligida bo'lsin, o'lchamdan qat'i nazar */
+    max-width: 100%;     /* HTML width="500" atributini bekor qiladi */
+    height: 200px;       /* Balandlikni qat'iy belgilaymiz */
+    object-fit: cover;   /* Cho'zilib ketmaydi, qirqib moslanadi */
+    display: block;      /* Pastdagi bo'shliqni yo'qotadi */
 }
 
-        .project-info {
-            position: absolute;
-            bottom: -100%;
-            left: 0;
-            width: 100%;
-            padding: 2rem;
-            background: rgba(10, 25, 47, 0.92);
-            transition: bottom 0.3s;
-        }
+.project-info {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    background: rgba(10, 25, 47, 0.92);
+    transition: bottom 0.3s;
+}
 
-        .project-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.4rem;
-            color: #fff;
-             font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
+.project-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    color: #fff;
+     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
-        .project-info p {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 1rem;
-             font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
+.project-info p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1rem;
+     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
-        .project-card:hover img {
-            transform: scale(1.1);
-        }
+.project-card:hover img {
+    transform: scale(1.1);
+}
 
-        .project-card:hover .project-info {
-            bottom: 0;
-        }
+.project-card:hover .project-info {
+    bottom: 0;
+}
 
-        /* Glow Button */
-        .glow-button {
-            display: inline-block;
-            padding: 0.4rem 1.8rem;
-            border: none;
-            border-radius: 5px;
-            background: rgba(88, 3, 97, 0.95);
-            color: rgba(255, 255, 255, 0.9);
-            font-family: 'Pricedown', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 0 20px rgba(57, 57, 57, 0.95);
-        }
+/* Glow Button */
+.glow-button {
+    display: inline-block;
+    padding: 0.4rem 1.8rem;
+    border: none;
+    border-radius: 5px;
+    background: rgba(88, 3, 97, 0.95);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Pricedown', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(57, 57, 57, 0.95);
+}
 
-        .glow-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(155, 123, 207, 0.95);
-        }
-        
-        
-        /* =====================
-           MOBILE
-        ===================== */
-        @media (max-width: 468px) {
+.glow-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(155, 123, 207, 0.95);
+}
 
-            body {
-                padding-top: 0;
-                padding-bottom: 65px;
-            }
 
-            .navbar {
-                top: auto;
-                bottom: 0;
-                left: 0;
-                height: 65px;
-                padding: 0;
-                justify-content: center;
-                background: #111;
-                border-top: 1px solid rgba(255, 255, 255, 0.12);
-                border-bottom: none;
-                backdrop-filter: none;
-            }
+/* =====================
+   MOBILE
+===================== */
+@media (max-width: 468px) {
 
-            .logo {
-                display: none;
-            }
+    body {
+        padding-top: 0;
+        padding-bottom: 65px;
+    }
 
-            .nav-links {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                margin: 0;
-                padding: 0;
-                gap: 0;
-            }
+    .navbar {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        height: 65px;
+        padding: 0;
+        justify-content: center;
+        background: #111;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: none;
+        backdrop-filter: none;
+    }
 
-            .nav-links li {
-                flex: 1;
-                height: 100%;
-            }
+    .logo {
+        display: none;
+    }
 
-            .nav-links a {
-                width: 100%;
-                height: 100%;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                font-size: 10px;
-                gap: 4px;
-                color: rgba(255, 255, 255, 0.7);
-                padding: 0;
-            }
+    .nav-links {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        gap: 0;
+    }
 
-            .nav-links a i {
-                font-size: 20px;
-            }
+    .nav-links li {
+        flex: 1;
+        height: 100%;
+    }
 
-            .nav-links a:hover,
-            .nav-links a.active {
-                color: #eb0afb;
-            }
+    .nav-links a {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        gap: 4px;
+        color: rgba(255, 255, 255, 0.7);
+        padding: 0;
+    }
 
-            .glow-link::after {
-                display: none;
-            }
+    .nav-links a i {
+        font-size: 20px;
+    }
 
-            /* Projects mobile */
-            .projects {
-                padding: 1.5rem 1rem 2rem;
-                min-height: auto;
-            }
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: #eb0afb;
+    }
 
-            .section-title {
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-            }
+    .glow-link::after {
+        display: none;
+    }
 
-            .filter-buttons {
-                gap: 0.6rem;
-                margin-bottom: 2rem;
-            }
+    /* Projects mobile */
+    .projects {
+        padding: 1.5rem 1rem 2rem;
+        min-height: auto;
+    }
 
-            .filter-btn {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-            }
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
+    .filter-buttons {
+        gap: 0.6rem;
+        margin-bottom: 2rem;
+    }
 
-            .project-card img {
-                height: 200px;
-            }
+    .filter-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+    }
 
-            /* Mobilda hover yo'q, info doim ko'rinsin */
-            .project-info {
-                position: relative;
-                bottom: auto;
-                background: rgba(10, 25, 47, 0.92);
-                border-radius: 0 0 10px 10px;
-            }
-        }
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 
-        @media (max-width: 480px) {
-            .projects {
-                padding: 1rem 0.8rem 1.5rem;
-            }
+    .project-card img,
+    .project-card video {
+        height: 200px;
+    }
 
-            .section-title {
-                font-size: 1.5rem;
-            }
+    /* Mobilda hover yo'q, info doim ko'rinsin */
+    .project-info {
+        position: relative;
+        bottom: auto;
+        background: rgba(10, 25, 47, 0.92);
+        border-radius: 0 0 10px 10px;
+    }
+}
 
-            .filter-btn {
-                padding: 0.35rem 0.8rem;
-                font-size: 0.8rem;
-            }
-        }
+@media (max-width: 480px) {
+    .projects {
+        padding: 1rem 0.8rem 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .filter-btn {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
