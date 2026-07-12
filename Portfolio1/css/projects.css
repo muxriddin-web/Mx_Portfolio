@@ -151,20 +151,21 @@
             margin: 0 auto;
         }
 
-        .project-card {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-        }
+.project-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    width: 100%; /* Karta to'liq kenglikni olsin */
+    margin-bottom: 20px; /* Kartalar orasida bo'shliq bo'lishi uchun */
+}
 
-        .project-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s;
-            display: block;
-        }
+.project-card img {
+    width: 100%;       /* Rasm doim konteyner kengligida bo'lsin */
+    height: 200px;     /* Balandlikni qat'iy belgilaymiz */
+    object-fit: cover; /* Rasm cho'zilib ketmaydi, qirqib moslanadi */
+    display: block;    /* Pastdagi bo'shliqni yo'qotadi */
+}
 
         .project-info {
             position: absolute;
