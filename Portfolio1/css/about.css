@@ -471,11 +471,11 @@ body {
     .gta-hud-container {
         padding: 10px;
         border-width: 2px;
-        margin-top: 5%;
+        margin-top: 3%;
     }
 
     .hud-title { font-size: 1.6rem; letter-spacing: 1px; margin-bottom: 12px; }
-    .hud-desc { font-size: 0.95rem; line-height: 1.4; margin-bottom: 20px; }
+    .hud-desc { font-size: 0.95rem; line-height: 1.4; margin-bottom: 30px; }
     .btn-wrapper { gap: 12px; }
     .hud-btn { padding: 14px 8px; font-size: 1.05rem; letter-spacing: 1px; }
 
