@@ -8,9 +8,9 @@
 } */
 @font-face {
     font-family: 'Pricedown';
-    src: url('./type/pricedown-bl.woff2') format('woff2'),
-         url('./type/pricedown-bl.woff') format('woff'),
-         url('./type/pricedown-bl.otf') format('opentype');
+    src: url('../type/pricedown-bl.woff2') format('woff2'),
+         url('../type/pricedown-bl.woff') format('woff'),
+         url('../type/pricedown-bl.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
