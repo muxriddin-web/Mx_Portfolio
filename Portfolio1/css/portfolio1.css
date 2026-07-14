@@ -2,9 +2,18 @@
 /* shrift portflio */
 /* @import url('/type/pricedown\ bl.otf'); */
 /* SHRIFT ULASH */
-@font-face {
+/* @font-face {
     font-family: 'Pricedown';
     src: url('./type/pricedown bl.otf') format('opentype');
+} */
+@font-face {
+    font-family: 'Pricedown';
+    src: url('./type/pricedown-bl.woff2') format('woff2'),
+         url('./type/pricedown-bl.woff') format('woff'),
+         url('./type/pricedown-bl.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 @view-transition {
     navigation: auto;
