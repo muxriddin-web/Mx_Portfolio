@@ -471,7 +471,7 @@ body {
     .gta-hud-container {
         padding: 10px;
         border-width: 2px;
-        margin-top: 10%;
+        margin-top: 5%;
     }
 
     .hud-title { font-size: 1.6rem; letter-spacing: 1px; margin-bottom: 12px; }
