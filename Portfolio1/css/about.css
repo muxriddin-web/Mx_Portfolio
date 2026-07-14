@@ -494,6 +494,11 @@ body {
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
+    .gta-reveal-footer {
+        bottom: 65px;
+        height: calc(100vh - 65px);
+        height: calc(100dvh - 65px);
+    }
     .scene-3d { flex-direction: row; gap: 10px; }
     .character-container { width: 40%; }
     .gta-hud-container { width: 55%; padding: 14px; }
@@ -570,6 +575,19 @@ body {
 
     .glow-link::after {
         display: none;
+    }
+
+    /* =====================================================
+       MUHIM FIX: GTA-REVEAL-FOOTER (savol/HUD kartasi) mobilda
+       pastki fixed navbar (65px) orqasida qolib ketmasligi uchun,
+       sahna balandligini navbar balandligicha qisqartirib,
+       navbardan YUQORIDA joylashtiramiz.
+       ===================================================== */
+    .gta-reveal-footer {
+        bottom: 65px;
+        height: calc(100vh - 65px);
+        height: calc(100dvh - 65px);
+        overflow-y: auto;
     }
 
     /* About section mobile */

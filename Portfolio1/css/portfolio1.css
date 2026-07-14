@@ -663,6 +663,19 @@ h1,h2,h3,h4,h5,h6,p{
         left: -9999px !important;      /* Ekrandan tashqariga chiqarib yuboradi */
       }
 
+    /* =====================================================
+       MUHIM FIX: GTA-REVEAL-FOOTER (savol/HUD kartasi) mobilda
+       pastki fixed navbar (65px) orqasida qolib ketmasligi uchun,
+       sahna balandligini navbar balandligicha qisqartirib,
+       navbardan YUQORIDA joylashtiramiz.
+       ===================================================== */
+    .gta-reveal-footer {
+        bottom: 65px;
+        height: calc(100vh - 65px);
+        height: calc(100dvh - 65px);
+        overflow-y: auto;
+    }
+
     .glitch {
         font-size: 2.4rem;
     }
@@ -720,6 +733,11 @@ h1,h2,h3,h4,h5,h6,p{
 
 /* JUDA PAST BALANDLIKDAGI EKRANLAR (masalan gorizontal telefon) */
 @media (max-height: 500px) and (orientation: landscape) {
+  .gta-reveal-footer {
+    bottom: 65px;
+    height: calc(100vh - 65px);
+    height: calc(100dvh - 65px);
+  }
   .scene-3d { flex-direction: row; gap: 10px; }
   .character-container { width: 40%; }
   .gta-hud-container { width: 55%; padding: 14px; }
