@@ -165,7 +165,6 @@ body {
 .skill:active {
     cursor: grabbing;
 }
-
 .skill-logo {
     width: 60px;
     height: 60px;
