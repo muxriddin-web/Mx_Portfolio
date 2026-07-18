@@ -141,7 +141,7 @@ body {
 
 /* Bazaviy GLASS (suv shisha) dizayn */
 .skill {
-    --accent: #eb0afb; /* default rang, har bir skill-* klassida override qilinadi */
+    --accent: #eb0afb;
 
     position: absolute;
     top: 0;
@@ -156,21 +156,21 @@ body {
     padding: 25px;
 
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid color-mix(in srgb, var(--accent) 60%, rgba(255, 255, 255, 0.4));
 
     background: linear-gradient(
         160deg,
-        color-mix(in srgb, var(--accent) 35%, transparent),
-        color-mix(in srgb, var(--accent) 10%, rgba(255, 255, 255, 0.08))
+        color-mix(in srgb, var(--accent) 55%, transparent),
+        color-mix(in srgb, var(--accent) 25%, rgba(20, 20, 20, 0.55))
     );
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
 
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5),
-        inset 0 -1px 8px rgba(0, 0, 0, 0.15),
-        0 0 25px color-mix(in srgb, var(--accent) 55%, transparent);
+        0 8px 32px rgba(0, 0, 0, 0.45),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45),
+        inset 0 -1px 8px rgba(0, 0, 0, 0.25),
+        0 0 30px color-mix(in srgb, var(--accent) 70%, transparent);
 
     transition: transform 0.2s ease-out, z-index 0s;
     cursor: grab;
@@ -240,22 +240,22 @@ body {
 /* =====================
    HAR BIR TEXNOLOGIYA RANGI
 ===================== */
-.skill-html        { --accent: #e34f26; }
-.skill-css         { --accent: #2965f1; }
-.skill-js          { --accent: #f0db4f; }
-.skill-react       { --accent: #61dafb; }
-.skill-reactnative { --accent: #764abc; }
-.skill-bootstrap   { --accent: #7952b3; }
-.skill-tailwind    { --accent: #38bdf8; }
-.skill-sass        { --accent: #cc6699; }
-.skill-jquery      { --accent: #0868ac; }
-.skill-node        { --accent: #3c873a; }
-.skill-express     { --accent: #9ca3af; }
-.skill-mongo       { --accent: #47a248; }
-.skill-jwt         { --accent: #fb015b; }
-.skill-restapi     { --accent: #009688; }
-.skill-git         { --accent: #f05032; }
-.skill-github      { --accent: #a78bfa; }
+.skill-html        { --accent: #c43e1a; }
+.skill-css         { --accent: #1948b3; }
+.skill-js          { --accent: #d4af17; }
+.skill-react       { --accent: #1698c9; }
+.skill-reactnative { --accent: #55348f; }
+.skill-bootstrap   { --accent: #5c3d94; }
+.skill-tailwind    { --accent: #1c8fc7; }
+.skill-sass        { --accent: #a34d76; }
+.skill-jquery      { --accent: #054d80; }
+.skill-node        { --accent: #2c6b2a; }
+.skill-express     { --accent: #4b5563; }
+.skill-mongo       { --accent: #2f7d34; }
+.skill-jwt         { --accent: #c4014a; }
+.skill-restapi     { --accent: #00695c; }
+.skill-git         { --accent: #c23a1f; }
+.skill-github      { --accent: #6d4fc4; }
 
 /* =====================
    MOBILE
