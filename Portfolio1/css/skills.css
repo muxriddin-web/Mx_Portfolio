@@ -139,7 +139,10 @@ body {
     touch-action: none;
 }
 
+/* Bazaviy GLASS (suv shisha) dizayn */
 .skill {
+    --accent: #eb0afb; /* default rang, har bir skill-* klassida override qilinadi */
+
     position: absolute;
     top: 0;
     left: 0;
@@ -149,22 +152,48 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.88);
-    border-radius: 12px;
-    padding: 25px;
     text-align: center;
-    box-shadow: 0 0 15px rgb(15, 170, 1);
-    border: 3px solid transparent;
-    background: linear-gradient(#e2dddd, #e2dddd) padding-box,
-                linear-gradient(90deg, rgb(224, 211, 23), rgb(119, 109, 255), lime) border-box;
+    padding: 25px;
+
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    background: linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--accent) 35%, transparent),
+        color-mix(in srgb, var(--accent) 10%, rgba(255, 255, 255, 0.08))
+    );
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 8px rgba(0, 0, 0, 0.15),
+        0 0 25px color-mix(in srgb, var(--accent) 55%, transparent);
+
     transition: transform 0.2s ease-out, z-index 0s;
     cursor: grab;
     will-change: transform;
 }
 
+/* Shisha ustidagi yorug'lik effekti (highlight) */
+.skill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    border-radius: 20px 20px 50% 50% / 20px 20px 20px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+    pointer-events: none;
+}
+
 .skill:active {
     cursor: grabbing;
 }
+
 .skill-logo {
     width: 60px;
     height: 60px;
@@ -172,36 +201,61 @@ body {
     margin-bottom: 12px;
     pointer-events: none;
     -webkit-user-drag: none;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
 }
 
 .skill-name {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 12px;
-    color: #333;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .skill-bar {
     width: 100%;
     height: 12px;
-    background: #ddd;
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 6px;
     overflow: hidden;
     margin-bottom: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .skill-level {
     height: 100%;
     width: 0;
-    background: linear-gradient(90deg, #580361, #eb0afb);
+    background: linear-gradient(90deg, var(--accent), #ffffff);
     border-radius: 6px;
     transition: width 1s ease;
+    box-shadow: 0 0 10px var(--accent);
 }
 
 .skill-percentage {
-    color: #444;
+    color: #fff;
     font-size: 0.95rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
+
+/* =====================
+   HAR BIR TEXNOLOGIYA RANGI
+===================== */
+.skill-html        { --accent: #e34f26; }
+.skill-css         { --accent: #2965f1; }
+.skill-js          { --accent: #f0db4f; }
+.skill-react       { --accent: #61dafb; }
+.skill-reactnative { --accent: #764abc; }
+.skill-bootstrap   { --accent: #7952b3; }
+.skill-tailwind    { --accent: #38bdf8; }
+.skill-sass        { --accent: #cc6699; }
+.skill-jquery      { --accent: #0868ac; }
+.skill-node        { --accent: #3c873a; }
+.skill-express     { --accent: #9ca3af; }
+.skill-mongo       { --accent: #47a248; }
+.skill-jwt         { --accent: #fb015b; }
+.skill-restapi     { --accent: #009688; }
+.skill-git         { --accent: #f05032; }
+.skill-github      { --accent: #a78bfa; }
 
 /* =====================
    MOBILE
