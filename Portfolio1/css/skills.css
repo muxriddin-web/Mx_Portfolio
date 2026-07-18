@@ -156,7 +156,7 @@ body {
     padding: 25px;
 
     border-radius: 20px;
-    border: 1px solid color-mix(in srgb, var(--accent) 60%, rgba(255, 255, 255, 0.4));
+    border: 2px solid color-mix(in srgb, var(--accent) 60%, rgba(255, 255, 255, 0.4));
 
     background: linear-gradient(
         160deg,
