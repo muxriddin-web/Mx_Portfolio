@@ -138,8 +138,8 @@ body {
 
 .r-star svg {
     /* Endi to'g'ridan-to'g'ri .logo eniga bog'langan, font-size zanjiriga emas */
-    width: 45cqi;
-    height: 33cqi;
+    width: 55cqi;
+    height: 43cqi;
     fill: rgb(255, 255, 255);
     stroke: black;
     stroke-width: 1.5px;
@@ -147,6 +147,6 @@ body {
 
 @media (max-width: 380px) {
     .logo {
-        width: min(160px, 60vw);
+        width: min(180px, 80vw);
     }
 }
