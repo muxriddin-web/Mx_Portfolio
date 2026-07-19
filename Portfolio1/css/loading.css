@@ -148,13 +148,13 @@ body {
 /* === MOBIL (faqat shu blok ichida o'zgartiring — desktopga ta'sir qilmaydi) === */
 @media (max-width: 768px) {
     .logo {
-        width: min(250px, 55vw);
+        width: min(260px, 55vw);
         border-radius: clamp(15px, 5vw, 30px);
     }
 }
 
 @media (max-width: 380px) {
     .logo {
-        width: min(140px, 60vw);
+        width: min(150px, 60vw);
     }
 }
