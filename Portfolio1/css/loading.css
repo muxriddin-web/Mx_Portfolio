@@ -72,10 +72,12 @@ body {
 }
 
 .logo {
-    /* Kvadrat shaklni har doim saqlash uchun aspect-ratio */
     width: min(200px, 55vw);
     aspect-ratio: 1 / 1;
     height: auto;
+
+    /* Container query uchun */
+    container-type: inline-size;
 
     border-radius: clamp(15px, 5vw, 30px);
     display: flex;
@@ -96,8 +98,8 @@ body {
 }
 
 .r-star {
-    /* Endi logo konteynerining %-iga bog'liq, vw-ga emas */
-    font-size: 55%;
+    /* Endi .logo eniga (cqi = container inline-size ning 1%) nisbatan */
+    font-size: 32cqi;
     font-weight: bold;
     color: black;
     position: relative;
@@ -135,15 +137,14 @@ body {
 }
 
 .r-star svg {
-    /* SVG endi r-star konteynerining em-iga (font-size'iga) bog'liq */
-    width: 0.85em;
-    height: 0.63em;
+    /* Endi to'g'ridan-to'g'ri .logo eniga bog'langan, font-size zanjiriga emas */
+    width: 45cqi;
+    height: 33cqi;
     fill: rgb(255, 255, 255);
     stroke: black;
     stroke-width: 1.5px;
 }
 
-/* === KICHIK EKRANLAR UCHUN QO'SHIMCHA MOSLASHUV === */
 @media (max-width: 380px) {
     .logo {
         width: min(160px, 60vw);
