@@ -149,7 +149,7 @@ body {
 @media (max-width: 768px) {
     .logo {
         width: min(260px, 55vw);
-        border-radius: clamp(15px, 5vw, 30px);
+        border-radius: clamp(25px, 5vw, 40px);
     }
 }
 
