@@ -35,7 +35,7 @@ function handleEnd() {
 
     if (Math.abs(currentX) > 50) {
         if (navigator.vibrate) {
-            navigator.vibrate(10);
+            navigator.vibrate(30);
         }
 
         activeCard.style.transition = "transform 0.4s ease-out";
@@ -54,7 +54,7 @@ function handleEnd() {
             updateCardPositions();
 
             if (navigator.vibrate) {
-                navigator.vibrate(20);
+                navigator.vibrate(50);
             }
         }, 400);
     } else {
