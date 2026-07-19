@@ -127,8 +127,8 @@ body {
 
 .r-star .star {
     position: absolute;
-    top: 62%;
-    left: 66%;
+    top: 61%;
+    left: 65%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
