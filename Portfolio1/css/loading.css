@@ -128,7 +128,7 @@ body {
 .r-star .star {
     position: absolute;
     top: 63%;
-    left: 68%;
+    left: 67.5%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
@@ -149,7 +149,7 @@ body {
 @media (max-width: 768px) {
     .logo {
         width: min(260px, 55vw);
-        border-radius: clamp(25px, 5vw, 40px);
+        border-radius: clamp(45px, 15vw, 60px);
     }
 }
 
