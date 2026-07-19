@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 body {
     overflow: hidden;
@@ -116,6 +118,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+     -webkit-text-stroke: 0.02em black;
     transform: translate(-21%, -12%);
     transition: opacity 0.5s ease;
     text-shadow:
