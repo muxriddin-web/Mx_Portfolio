@@ -72,7 +72,7 @@ body {
 }
 
 .logo {
-    width: min(215px, 65vw);
+    width: min(210px, 60vw);
     aspect-ratio: 1 / 1;
     height: auto;
 
