@@ -72,7 +72,7 @@ body {
 }
 
 .logo {
-    width: min(200px, 85vw);
+    width: min(100px, 65vw);
     aspect-ratio: 1 / 1;
     height: auto;
 
@@ -147,6 +147,6 @@ body {
 
 @media (max-width: 380px) {
     .logo {
-        width: min(200px, 85vw);
+        width: min(100px, 65vw);
     }
 }
