@@ -72,7 +72,7 @@ body {
 }
 
 .logo {
-    width: min(200px, 45vw);
+    width: 200px; 
     aspect-ratio: 1 / 1;
     height: auto;
 
@@ -145,8 +145,16 @@ body {
     stroke-width: 1.5px;
 }
 
+/* === MOBIL (faqat shu blok ichida o'zgartiring — desktopga ta'sir qilmaydi) === */
+@media (max-width: 768px) {
+    .logo {
+        width: min(180px, 55vw);
+        border-radius: clamp(15px, 5vw, 30px);
+    }
+}
+
 @media (max-width: 380px) {
     .logo {
-        width: min(200px, 45vw);
+        width: min(140px, 60vw);
     }
 }
