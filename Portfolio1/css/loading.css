@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     overflow: hidden;
     font-family: "Nunito Sans", sans-serif;
@@ -23,7 +22,6 @@ body {
     z-index: -2;
     background: black;
 }
-
 #bg-audio {
     display: none;
 }
@@ -35,28 +33,25 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 15px 30px;
-    font-size: 18px;
+    font-size: clamp(14px, 4vw, 18px);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     z-index: 10;
     text-decoration: none;
     transition: transform 0.2s ease;
+    white-space: nowrap;
 }
-
 #button1:active, #button2 a:active {
     transform: translate(-50%, -50%) scale(0.95);
 }
-
 #button1 {
     background-color: #007BFF;
     color: white;
 }
-
 #button2 {
     display: none;
 }
-
 #button2 a {
     background-color: #28A745;
     color: white;
@@ -73,12 +68,15 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+    padding: 0 20px;
 }
 
 .logo {
-    /* Ekran hajmiga qarab moslashuvchi o'lchamlar */
-    width: clamp(230px, 40vw, 200px);
-    height: clamp(230px, 35vw, 200px);
+    /* Kvadrat shaklni har doim saqlash uchun aspect-ratio */
+    width: min(200px, 55vw);
+    aspect-ratio: 1 / 1;
+    height: auto;
+
     border-radius: clamp(15px, 5vw, 30px);
     display: flex;
     justify-content: center;
@@ -93,13 +91,13 @@ body {
     border-color: #000000;
 }
 
-/* JS tomonidan qo'shiladigan kattalashish effekti */
 .logo.scale-up {
     transform: scale(1.45);
 }
 
 .r-star {
-    font-size: clamp(85px, 55vw, 105px);
+    /* Endi logo konteynerining %-iga bog'liq, vw-ga emas */
+    font-size: 55%;
     font-weight: bold;
     color: black;
     position: relative;
@@ -137,9 +135,17 @@ body {
 }
 
 .r-star svg {
-    width: clamp(65px, 38vw, 90px);
-    height: clamp(45px, 28vw, 67px);
+    /* SVG endi r-star konteynerining em-iga (font-size'iga) bog'liq */
+    width: 0.85em;
+    height: 0.63em;
     fill: rgb(255, 255, 255);
     stroke: black;
     stroke-width: 1.5px;
+}
+
+/* === KICHIK EKRANLAR UCHUN QO'SHIMCHA MOSLASHUV === */
+@media (max-width: 380px) {
+    .logo {
+        width: min(160px, 60vw);
+    }
 }
