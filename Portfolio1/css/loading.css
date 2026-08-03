@@ -182,10 +182,14 @@ body {
         width: min(260px, 55vw);
         border-radius: clamp(35px, 15vw, 50px);
     }
+    .#bg-video {
+        width: min(260px, 55vw);
+    }
 }
 
 @media (max-width: 380px) {
     .logo {
         width: min(200px, 60vw);
+        border-radius: clamp(35px, 15vw, 50px);
     }
 }
