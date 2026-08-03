@@ -189,7 +189,7 @@ body {
 
 @media (max-width: 380px) {
     .logo {
-        width: min(200px, 60vw);
+        width: min(400px, 60vw);
         border-radius: clamp(35px, 15vw, 50px);
         border: 5px solid red;
         
