@@ -186,6 +186,6 @@ body {
 
 @media (max-width: 380px) {
     .logo {
-        width: min(260px, 55vw);
+        width: min(200px, 60vw);
     }
 }
