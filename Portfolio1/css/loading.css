@@ -195,7 +195,7 @@ body {
         
     }
     .#bg-video {
-        width: min(100px, 60vw);
+        width: min(80px, 60vw);
         background-color: #007BFF
         border: 5px solid red;
     }
