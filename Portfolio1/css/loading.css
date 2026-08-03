@@ -191,11 +191,12 @@ body {
     .logo {
         width: min(200px, 60vw);
         border-radius: clamp(35px, 15vw, 50px);
-        background-color: #007BFF;
+        border: 5px solid red;
         
     }
     .#bg-video {
         width: min(200px, 60vw);
-        background-color: #007BFF;
+        background-color: #007BFF
+        border: 5px solid red;
     }
 }
