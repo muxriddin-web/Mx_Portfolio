@@ -129,7 +129,7 @@ body {
 .logo-glass-bg {
     position: absolute;
     /* Logotipdan aniq kattaroq o'lcham (masalan, 260px) */
-    width: 260px; 
+    width: 300px; 
     aspect-ratio: 1 / 1;
     background-color: rgba(255, 255, 255, 0.15); /* Shafof oq fon */
     backdrop-filter: blur(12px);
