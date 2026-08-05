@@ -104,34 +104,6 @@ body {
     padding: 0 20px;
 }
 
-.logo-glass-bg {
-    position: absolute;
-    /* Logotipdan kattaroq bo'lishi uchun (140%) */
-    width: 170%; 
-    aspect-ratio: 1 / 1;
-    
-    /* Shafof fon va shisha effekti */
-    background-color: rgba(255, 255, 255, 0.15); 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: clamp(25px, 8vw, 45px);
-    
-    /* Har doim logotip va M harfining ORQASIDA turishi uchun */
-    z-index: -1; 
-    
-    /* Mukammal markazda turishi uchun */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    
-    /* Boshlang'ich holatda ko'rinmaydi */
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-}
-
 /* JS orqali class qo'shilganda paydo bo'ladigan holat */
 .logo-glass-bg.show-glass {
     opacity: 1;
@@ -139,7 +111,7 @@ body {
 }
 
 .logo {
-    position: relative; /* Ichidagi absolute elementlar shu logo'ga nisbatan turishi uchun shart */
+    position: relative; /* Ichidagi absolute elementlar to'g'ri turishi uchun shart */
     width: 170px; 
     aspect-ratio: 1 / 1;
     height: auto;
@@ -152,6 +124,27 @@ body {
     background-color: transparent;
     border: 5px solid transparent;
     z-index: 2;
+}
+
+.logo-glass-bg {
+    position: absolute;
+    width: 140%; 
+    aspect-ratio: 1 / 1;
+    background-color: rgba(255, 255, 255, 0.15); /* Aniq ko'rinadigan shaffof oq fon */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: clamp(25px, 8vw, 45px);
+    z-index: -1; /* Video ustida, lekin harflarning orqasida */
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Boshlang'ich holatda ko'rinmaydi */
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
 }
 
 .logo.blue-bg {
