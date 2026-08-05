@@ -107,7 +107,7 @@ body {
 .logo-glass-bg {
     position: absolute;
     /* Logotipdan kattaroq bo'lishi uchun (140%) */
-    width: 140%; 
+    width: 170%; 
     aspect-ratio: 1 / 1;
     
     /* Shafof fon va shisha effekti */
