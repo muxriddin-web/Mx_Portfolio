@@ -90,6 +90,7 @@ body {
 }
 
 /* === LOGO VA ANIMATSIYALAR === */
+/* === SHAFOF OYNA (GLASS BACKGROUND) === */
 .logo-container {
     position: absolute;
     top: 50%;
@@ -99,17 +100,28 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center; /* Markazga keltirish uchun */
     padding: 0 20px;
+}
+
+.logo-glass-bg {
+    position: absolute;
+    width: 240px; /* Logotipdan kattaroq boshlang'ich o'lcham */
+    aspect-ratio: 1 / 1;
+    background: rgba(255, 255, 255, 0.15); /* Shafof oq fon */
+    backdrop-filter: blur(12px); /* Orqa fonni xiralashtirish (shisha effekti) */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Ingichka yaltiroq chegara */
+    border-radius: clamp(25px, 6vw, 40px);
+    z-index: 1; /* Logotip ostida joylashishi uchun */
+    transition: all 0.8s ease;
 }
 
 .logo {
     width: 170px; 
     aspect-ratio: 1 / 1;
     height: auto;
-
-    /* Container query uchun */
     container-type: inline-size;
-
     border-radius: clamp(15px, 5vw, 30px);
     display: flex;
     justify-content: center;
@@ -117,6 +129,7 @@ body {
     transition: all 0.8s ease;
     background-color: transparent;
     border: 5px solid transparent;
+    z-index: 2; /* Shafof oynadan ustda turishi uchun */
 }
 
 .logo.blue-bg {
@@ -175,19 +188,29 @@ body {
     stroke-width: 1.5px;
 }
 
-/* === MOBIL (faqat shu blok ichida o'zgartiring — desktopga ta'sir qilmaydi) === */
+/* === MOBIL (RESPONSIV) QISMI === */
 @media (max-width: 768px) {
     .logo {
         width: min(260px, 55vw);
         border-radius: clamp(25px, 10vw, 40px);
     }
+    
+    /* Mobil qurilmalarda shisha fon ham logotipga mos ravishda kattalashadi */
+    .logo-glass-bg {
+        width: min(340px, 75vw);
+        border-radius: clamp(35px, 12vw, 55px);
+    }
 }
 
 @media (max-width: 380px) {
     .logo {
-        /* Ekran juda kichik bo'lganda logotip o'lchami o'ta kichrayib ketmasligi uchun minimal o'lcham belgilanadi */
         width: 180px; 
         border-radius: 25px;
         border: 4px solid red;
+    }
+
+    .logo-glass-bg {
+        width: 245px;
+        border-radius: 35px;
     }
 }
