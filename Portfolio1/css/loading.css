@@ -219,7 +219,7 @@ body {
     }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 360px) {
     .logo {
         width: 180px; 
         border-radius: 25px;
@@ -227,7 +227,7 @@ body {
     }
 
     .logo-glass-bg {
-        width: 245px;
+        width: 345px;
         border-radius: 35px;
     }
 }
