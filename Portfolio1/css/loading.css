@@ -106,30 +106,40 @@ body {
 
 .logo-glass-bg {
     position: absolute;
-    /* Logotipdan kattaroq bo'lishi uchun o'lchamni foizda yoki maxsus piksda beramiz */
+    /* Logotipdan kattaroq bo'lishi uchun (140%) */
     width: 140%; 
     aspect-ratio: 1 / 1;
-    background: rgba(255, 255, 255, 0.15); /* Shafof oq fon (Glassmorphism) */
+    
+    /* Shafof fon va shisha effekti */
+    background-color: rgba(255, 255, 255, 0.15); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: clamp(25px, 8vw, 45px);
-    z-index: 1; /* Harflar (r-star) orqasida turishi uchun */
+    
+    /* Har doim logotip va M harfining ORQASIDA turishi uchun */
+    z-index: -1; 
+    
+    /* Mukammal markazda turishi uchun */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
     
     /* Boshlang'ich holatda ko'rinmaydi */
     opacity: 0;
-    transform: scale(0.8);
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
 }
 
-/* JS orqali chaqirilganda paydo bo'ladigan holat */
+/* JS orqali class qo'shilganda paydo bo'ladigan holat */
 .logo-glass-bg.show-glass {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .logo {
+    position: relative; /* Ichidagi absolute elementlar shu logo'ga nisbatan turishi uchun shart */
     width: 170px; 
     aspect-ratio: 1 / 1;
     height: auto;
@@ -141,7 +151,7 @@ body {
     transition: all 0.8s ease;
     background-color: transparent;
     border: 5px solid transparent;
-    z-index: 2; /* Shafof oynadan ustda turishi uchun */
+    z-index: 2;
 }
 
 .logo.blue-bg {
