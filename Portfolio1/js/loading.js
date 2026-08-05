@@ -1,7 +1,7 @@
 const letter = document.getElementById("letter");
 const star = document.getElementById("star");
 const logo = document.getElementById("logo");
-const glassBg = document.querySelector(".logo-glass-bg"); // Shafof oyna elementi
+const glassBg = document.getElementById("glassBg"); // Shafof oyna elementi
 
 const video = document.getElementById("bg-video");
 const audio = document.getElementById("bg-audio");
@@ -10,10 +10,10 @@ const button2 = document.getElementById("button2");
 
 video.muted = true;
 
-// M + yulduz va shafof oynaning boshlang'ich holati (ko'rinmaydi)
+// Boshlang'ich holatda M, yulduz va shafof oyna ko'rinmaydi
 letter.style.opacity = "0";
 star.style.opacity = "0";
-glassBg.style.opacity = "0"; // Boshida shisha fon ham yo'q
+glassBg.classList.remove("show-glass");
 
 // Button1 bosilganda
 button1.addEventListener("click", () => {
@@ -24,22 +24,24 @@ button1.addEventListener("click", () => {
 
     button1.style.display = "none";
 
-    // Animatsiya (12-15s) - M, yulduz va shafof oyna birga chiqadi
+    // 12-sekundda: M harfi, yulduz va ularning ORQASIDA shafof oyna paydo bo'ladi
     setTimeout(() => {
         letter.innerHTML = "<i>M</i>";
         letter.style.opacity = "1";
         star.style.opacity = "1";
         
-        // Shafof oynani ko'rsatish va kattalashtirish animatsiyasi
+        // Shafof oynani ko'rsatish
         glassBg.classList.add("show-glass");
+        
+        // CSS orqali fon va razmerni kattalashtirish
         logo.classList.add("blue-bg", "scale-up");
     }, 12000);
 
-    // Animatsiyani to'xtatish (15s da)
+    // 15-sekundda: Hammasi birgalikda yo'qoladi
     setTimeout(() => {
         letter.style.opacity = "0";
         star.style.opacity = "0";
-        glassBg.classList.remove("show-glass"); // Shisha fon ham yo'qoladi
+        glassBg.classList.remove("show-glass"); // Shafof oyna yo'qoladi
         logo.classList.remove("blue-bg");
     }, 15000);
 });
@@ -50,5 +52,5 @@ video.addEventListener("ended", () => {
     audio.currentTime = 0;
     button2.style.display = "block"; 
     logo.classList.remove("scale-up");
-    glassBg.classList.remove("show-glass"); // Har ehtimolga qarshi video oxirida ham o'chiriladi
+    glassBg.classList.remove("show-glass"); // Har ehtimolga qarshi oxirida ham o'chiriladi
 });
