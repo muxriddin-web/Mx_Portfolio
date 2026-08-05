@@ -106,15 +106,27 @@ body {
 
 .logo-glass-bg {
     position: absolute;
-    width: 240px; /* Logotipdan kattaroq boshlang'ich o'lcham */
+    /* Logotipdan kattaroq bo'lishi uchun o'lchamni foizda yoki maxsus piksda beramiz */
+    width: 140%; 
     aspect-ratio: 1 / 1;
-    background: rgba(255, 255, 255, 0.15); /* Shafof oq fon */
-    backdrop-filter: blur(12px); /* Orqa fonni xiralashtirish (shisha effekti) */
+    background: rgba(255, 255, 255, 0.15); /* Shafof oq fon (Glassmorphism) */
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Ingichka yaltiroq chegara */
-    border-radius: clamp(25px, 6vw, 40px);
-    z-index: 1; /* Logotip ostida joylashishi uchun */
-    transition: all 0.8s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: clamp(25px, 8vw, 45px);
+    z-index: 1; /* Harflar (r-star) orqasida turishi uchun */
+    
+    /* Boshlang'ich holatda ko'rinmaydi */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+
+/* JS orqali chaqirilganda paydo bo'ladigan holat */
+.logo-glass-bg.show-glass {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .logo {
@@ -151,6 +163,7 @@ body {
     justify-content: center;
     width: 100%;
     height: 100%;
+    z-index: 2;
 }
 
 .r-star .r {
