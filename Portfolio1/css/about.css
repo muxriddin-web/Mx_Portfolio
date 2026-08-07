@@ -20,7 +20,6 @@ body {
     color: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;
-    /* Desktop: navbar yuqorida, pastdan padding yo'q */
     padding-top: 70px;
     padding-bottom: 0;
 }
