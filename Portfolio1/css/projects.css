@@ -96,18 +96,21 @@ body {
    PROJECTS SECTION
 ===================== */
 .projects {
-    padding: 3rem 1.5rem 4rem;
+    padding: 2.5rem 1rem 3rem;
     min-height: calc(100vh - 70px);
     background-image: url(../imges/fonr7.png);
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: #fff;
     text-shadow: 0 0 10px rgb(13, 49, 22);
 }
@@ -120,7 +123,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.8rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .filter-btn {
@@ -150,7 +153,7 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 10px 10px 50px;
+    padding: 10px 10px 45px;
     overflow: hidden;
 
     --swiper-navigation-color: #eb0afb;
@@ -161,7 +164,7 @@ body {
 }
 
 .project-swiper .swiper-slide {
-    width: 320px;
+    width: 360px;
     height: auto;
     display: flex;
 }
@@ -174,14 +177,14 @@ body {
     width: 100%;
     background: rgb(25, 23, 25);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
 }
 
 .media-container {
     width: 100%;
-    height: 200px;
+    height: 230px;
     overflow: hidden;
     background: #000;
 }
@@ -204,15 +207,15 @@ body {
 }
 
 .project-info h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: #fff;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .project-info p {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 1.2rem;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     line-height: 1.4;
@@ -243,7 +246,7 @@ body {
 /* Glow Button */
 .glow-button {
     display: inline-block;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1.6rem;
     border: none;
     border-radius: 6px;
     background: rgba(88, 3, 97, 0.95);
@@ -385,38 +388,43 @@ body {
 
     /* Projects section mobile view */
     .projects {
-        padding: 1.5rem 1rem 2rem;
-        min-height: auto;
+        padding: 1.2rem 0.8rem 1.5rem;
+        min-height: calc(100vh - 65px);
+        background-size: 100% 100%; /* Orqa fon ekranga to'liq moslashadi */
     }
 
     .section-title {
-        font-size: 2rem;
-        margin-bottom: 1.2rem;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
     }
 
     .filter-buttons {
         gap: 0.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.2rem;
     }
 
     .filter-btn {
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.85rem;
     }
 
     .project-swiper {
-        padding: 5px 5px 40px;
+        padding: 5px 2px 35px;
     }
 
+    /* Cardlar kattalashtirildi */
     .project-swiper .swiper-slide {
-        width: 280px;
+        width: 310px;
+    }
+
+    .media-container {
+        height: 210px;
     }
 
     .side-nav {
-        display: none; /* Mobilda strelkalar yashiriladi, siljitish osonroq bo'lishi uchun */
+        display: none;
     }
 
-    /* Mobilda info har doim ochiq va karta ichida qotmasdan ishlaydi */
     .project-info {
         position: relative;
         bottom: auto;
@@ -432,10 +440,14 @@ body {
 
 @media (max-width: 480px) {
     .project-swiper .swiper-slide {
-        width: 85vw; /* Kichik ekranli telefonlarda kartochka kengligi moslashadi */
+        width: 88vw; /* Ekran kengligiga mos ravishda kattaroq card */
     }
     
+    .media-container {
+        height: 220px;
+    }
+
     .section-title {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
     }
 }
