@@ -39,6 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
             nextEl: '#projectSwiper .swiper-button-next',
             prevEl: '#projectSwiper .swiper-button-prev'
         }
+        // Vibratsiya qo'shish uchun on hodisasi
+        on: {
+            slideChange: function () {
+                // Agar qurilma vibratsiyani qo'llab-quvvatlasa, 20 millisekund titrash beradi
+                if ("vibrate" in navigator) {
+                    navigator.vibrate(20); 
+                }
+            },
+        },
     });
 
     /* ─── VIDEO LAZY LOAD — faqat ekranga ko'ringan video yuklanadi va ijro etiladi ─── */
