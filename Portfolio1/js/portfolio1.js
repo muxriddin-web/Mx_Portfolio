@@ -181,8 +181,6 @@ if (overlay && btnYes && btnNo) {
 
         bg.style.transform = `translateX(${x * 0.5}px) translateY(${y * 0.5}px)`;
         char.style.transform = `rotateY(${15 - x}deg) rotateX(${y}deg)`;
-        // HUD paneli endi qimirlamaydi — HA/YO'Q tugmalari doim bir joyda,
-        // to'liq bosiladigan holatda turishi uchun dinamik burilish olib tashlandi.
     }
 
     // 3D Parallax Mousemove (faqat desktop uchun)
