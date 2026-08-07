@@ -386,39 +386,40 @@ body {
         display: none;
     }
 
-    /* Projects section mobile view */
+    /* Projects section mobile view - Kartochkalarni pastroqqa tushirish uchun padding va justify o'zgartirildi */
     .projects {
-        padding: 1.2rem 0.8rem 1.5rem;
+        padding: 1rem 0.8rem 1rem;
         min-height: calc(100vh - 65px);
-        background-size: 100% 100%; /* Orqa fon ekranga to'liq moslashadi */
+        background-size: 100% 100%;
+        justify-content: center; /* Kartalarni ekranning qoq markaziga (vertikal bo'yicha) joylashtiradi */
     }
 
     .section-title {
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
+        font-size: 1.7rem;
+        margin-bottom: 0.8rem;
     }
 
     .filter-buttons {
-        gap: 0.5rem;
-        margin-bottom: 1.2rem;
+        gap: 0.4rem;
+        margin-bottom: 1rem;
     }
 
     .filter-btn {
-        padding: 0.4rem 0.9rem;
+        padding: 0.35rem 0.8rem;
         font-size: 0.85rem;
     }
 
     .project-swiper {
-        padding: 5px 2px 35px;
+        padding: 5px 2px 30px;
     }
 
-    /* Cardlar kattalashtirildi */
+    /* Cardlarning mobil o'lchami kattalashtirildi va bo'sh joy qolmaydigan qilindi */
     .project-swiper .swiper-slide {
-        width: 310px;
+        width: 320px;
     }
 
     .media-container {
-        height: 210px;
+        height: 240px; /* Videolar balandligi kattalashtirildi */
     }
 
     .side-nav {
@@ -429,25 +430,31 @@ body {
         position: relative;
         bottom: auto;
         background: rgba(10, 25, 47, 0.98);
-        padding: 1.2rem;
+        padding: 1.1rem;
+    }
+
+    .project-info p {
+        font-size: 0.88rem;
+        margin-bottom: 1rem;
     }
 
     .glow-button {
         width: 100%;
         text-align: center;
+        padding: 0.5rem;
     }
 }
 
 @media (max-width: 480px) {
     .project-swiper .swiper-slide {
-        width: 88vw; /* Ekran kengligiga mos ravishda kattaroq card */
+        width: 90vw; /* Kichik ekranli telefonlarda card kengaytirildi */
     }
     
     .media-container {
-        height: 220px;
+        height: 250px;
     }
 
     .section-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 }
