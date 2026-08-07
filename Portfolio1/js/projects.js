@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return filter === 'all' || card.getAttribute('data-category') === filter;
             });
 
-            // Eski slaydlarni olib tashlab, mos keladiganlarini qayta qo'shamiz
+            // slaydlar
             swiper.removeAllSlides();
 
             if (matched.length) {
