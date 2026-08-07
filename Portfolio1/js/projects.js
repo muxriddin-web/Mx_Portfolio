@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('emptyState');
 
     // Boshlang'ich holatdagi barcha slaydlarni xotirada saqlab qo'yamiz
-     // Boshlang'ich holatdagi barcha slaydlarni xotirada saqlab qo'yamiz
     const allSlides = Array.from(wrapper.children);
     
     const swiper = new Swiper('#projectSwiper', {
