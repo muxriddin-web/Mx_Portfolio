@@ -43,9 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Vibratsiya qo'shish uchun on hodisasi
         on: {
             slideChange: function () {
-                // Agar qurilma vibratsiyani qo'llab-quvvatlasa, 20 millisekund titrash beradi
+                // Agar qurilma vibratsiyani qo'llab-quvvatlasa, 30 millisekund titrash beradi
                 if ("vibrate" in navigator) {
-                    navigator.vibrate(20); 
+                    navigator.vibrate(30); 
                 }
             },
         },
