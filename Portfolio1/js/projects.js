@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navigation: {
             nextEl: '#projectSwiper .swiper-button-next',
             prevEl: '#projectSwiper .swiper-button-prev'
-        }, // <-- Mana bu yerga vergul qo'yish esdan chiqqan edi
+        }, 
         
         // Vibratsiya qo'shish uchun on hodisasi
         on: {
