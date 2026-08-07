@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('emptyState');
 
     // Boshlang'ich holatdagi barcha slaydlarni xotirada saqlab qo'yamiz
+     // Boshlang'ich holatdagi barcha slaydlarni xotirada saqlab qo'yamiz
     const allSlides = Array.from(wrapper.children);
-
+    
     const swiper = new Swiper('#projectSwiper', {
         effect: 'coverflow',
         grabCursor: true,
@@ -38,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
         navigation: {
             nextEl: '#projectSwiper .swiper-button-next',
             prevEl: '#projectSwiper .swiper-button-prev'
-        }
+        }, // <-- Mana bu yerga vergul qo'yish esdan chiqqan edi
+        
         // Vibratsiya qo'shish uchun on hodisasi
         on: {
             slideChange: function () {
