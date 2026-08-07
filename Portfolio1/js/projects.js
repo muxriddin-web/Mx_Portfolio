@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
         effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 1.15,
-        spaceBetween: 24,
+        slidesPerView: 'auto',
+        spaceBetween: 20,
         coverflowEffect: {
             rotate: 0,
             stretch: 0,
