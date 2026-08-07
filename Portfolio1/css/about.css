@@ -597,7 +597,7 @@ body {
     /* About section mobile */
     .about {
         padding: 1.5rem 1rem 2rem;
-        min-height: 100vh; /* Ekranni to'liq qoplashi uchun */
+        min-height: 100vh; 
         background-attachment: scroll; /* Mobil Safari kabi brauzerlarda background muammosiz ishlashi uchun scroll qilinadi */
         background-size: cover;
     }
