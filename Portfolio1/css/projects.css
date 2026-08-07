@@ -391,7 +391,7 @@ body {
         padding: 1rem 0.8rem 1rem;
         min-height: calc(100vh - 65px);
         background-size: 100% 100%;
-        justify-content: center; /* Kartalarni ekranning qoq markaziga (vertikal bo'yicha) joylashtiradi */
+        justify-content: center;
     }
 
     .section-title {
