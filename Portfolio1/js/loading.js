@@ -52,5 +52,5 @@ video.addEventListener("ended", () => {
     audio.currentTime = 0;
     button2.style.display = "block"; 
     logo.classList.remove("scale-up");
-    glassBg.style.opacity = "0"; // Video oxirida ham o'chiriladi
+    glassBg.style.opacity = "0"; 
 });
