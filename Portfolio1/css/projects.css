@@ -447,7 +447,7 @@ body {
 
 @media (max-width: 480px) {
     .project-swiper .swiper-slide {
-        width: 90vw; /* Kichik ekranli telefonlarda card kengaytirildi */
+        width: 90vw; 
     }
     
     .media-container {
