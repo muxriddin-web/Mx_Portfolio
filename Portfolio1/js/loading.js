@@ -43,7 +43,7 @@ button1.addEventListener("click", () => {
         star.style.opacity = "0";
         glassBg.style.opacity = "0"; // Shafof oyna o'chadi
         logo.classList.remove("blue-bg");
-    }, 15000);
+    }, 17000);
 });
 
 // Video tugaganda
