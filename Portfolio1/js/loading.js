@@ -35,7 +35,7 @@ button1.addEventListener("click", () => {
         
         // Fon va razmerni kattalashtirish
         logo.classList.add("blue-bg", "scale-up");
-    }, 14000);
+    }, 13000);
 
     // 15-sekundda: M, yulduz va shafof oyna yo'qoladi
     setTimeout(() => {
