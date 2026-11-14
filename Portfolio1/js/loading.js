@@ -35,7 +35,7 @@ button1.addEventListener("click", () => {
         
         // Fon va razmerni kattalashtirish
         logo.classList.add("blue-bg", "scale-up");
-    }, 12000);
+    }, 14000);
 
     // 15-sekundda: M, yulduz va shafof oyna yo'qoladi
     setTimeout(() => {
@@ -43,7 +43,7 @@ button1.addEventListener("click", () => {
         star.style.opacity = "0";
         glassBg.style.opacity = "0"; // Shafof oyna o'chadi
         logo.classList.remove("blue-bg");
-    }, 20000);
+    }, 18000);
 });
 
 // Video tugaganda
