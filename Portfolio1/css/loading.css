@@ -252,9 +252,9 @@ body {
 
 @media (max-width: 360px) {
     :root {
-        --logo-size: min(180px, 50vw);
-        /* Eski 345px qiymat 320-360px ekranlarda ekrandan chiqib ketardi */
-        --glass-size: min(345px, 92vw);
+        --logo-size: 180px;
+        /* Asl qiymat 345px edi; 320px ekranda ekrandan chiqib ketmasligi uchun kenglikka moslandi */
+        --glass-size: min(345px, 96vw);
     }
 
     .logo {
