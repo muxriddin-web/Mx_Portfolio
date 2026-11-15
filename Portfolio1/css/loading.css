@@ -5,11 +5,26 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
+
+:root {
+    /* Logotip va shisha oyna o'lchamlari — barcha o'lchamlar shu o'zgaruvchilardan hisoblanadi.
+       (Eski kodda `cqi` birligi ishlatilgan edi: eski telefonlarda u umuman ishlamaydi,
+       M harfi va yulduz noto'g'ri o'lchamda chiqardi.) */
+    --logo-size: 170px;
+    --glass-size: 300px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
 body {
     overflow: hidden;
     font-family: "Nunito Sans", sans-serif;
     min-height: 100vh;
     background: #0b0b14;
+    overscroll-behavior: none;
 }
 
 /* === VIDEO VA AUDIO === */
@@ -23,6 +38,7 @@ body {
     object-position: center;
     z-index: -2;
     background: black;
+    pointer-events: none;
 }
 #bg-audio {
     display: none;
@@ -44,9 +60,12 @@ body {
     cursor: pointer;
     z-index: 10;
     text-decoration: none;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+                box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 #button1:active, #button2 a:active {
@@ -90,7 +109,6 @@ body {
 }
 
 /* === LOGO VA ANIMATSIYALAR === */
-/* === SHAFOF OYNA (GLASS BACKGROUND) === */
 .logo-container {
     position: absolute;
     top: 50%;
@@ -102,6 +120,7 @@ body {
     justify-content: center;
     align-items: center; /* Markazga keltirish uchun */
     padding: 0 20px;
+    pointer-events: none; /* tugmalarni bosishga xalaqit bermasin */
 }
 
 /* JS orqali class qo'shilganda paydo bo'ladigan holat */
@@ -112,15 +131,15 @@ body {
 
 .logo {
     position: relative; /* Ichidagi absolute elementlar to'g'ri turishi uchun shart */
-    width: 170px; 
+    width: var(--logo-size);
     aspect-ratio: 1 / 1;
     height: auto;
-    container-type: inline-size;
     border-radius: clamp(15px, 5vw, 30px);
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.8s ease;
+    /* `transition: all` o'rniga faqat kerakli xossalar */
+    transition: transform 0.8s ease, background-color 0.8s ease, border-color 0.8s ease;
     background-color: transparent;
     border: 5px solid transparent;
     z-index: 2;
@@ -128,8 +147,7 @@ body {
 
 .logo-glass-bg {
     position: absolute;
-    /* Logotipdan aniq kattaroq o'lcham (masalan, 260px) */
-    width: 300px; 
+    width: var(--glass-size);
     aspect-ratio: 1 / 1;
     background-color: rgba(255, 255, 255, 0.15); /* Shafof oq fon */
     backdrop-filter: blur(12px);
@@ -137,15 +155,22 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: clamp(25px, 8vw, 45px);
     z-index: 1; /* Logotipning ostida (ortida) turishi uchun */
-    
+
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
+
     /* Boshlang'ich holatda ko'rinmaydi */
     opacity: 0;
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
+}
+
+/* backdrop-filter qo'llab-quvvatlanmasa (ba'zi eski telefonlar) — oddiy shaffof fon */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .logo-glass-bg {
+        background-color: rgba(255, 255, 255, 0.24);
+    }
 }
 
 .logo.blue-bg {
@@ -157,8 +182,9 @@ body {
     transform: scale(1.45);
 }
 
+/* Eski `50cqi / 45cqi / 33cqi` qiymatlari: logo ichki kengligi = o'lcham - 2*5px border */
 .r-star {
-    font-size: 50cqi;
+    font-size: calc((var(--logo-size) - 10px) * 0.5);
     font-weight: bold;
     color: black;
     position: relative;
@@ -198,8 +224,8 @@ body {
 }
 
 .r-star svg {
-    width: 45cqi;
-    height: 33cqi;
+    width: calc((var(--logo-size) - 10px) * 0.45);
+    height: calc((var(--logo-size) - 10px) * 0.33);
     fill: rgb(255, 255, 255);
     stroke: black;
     stroke-width: 1.5px;
@@ -207,26 +233,42 @@ body {
 
 /* === MOBIL (RESPONSIV) QISMI === */
 @media (max-width: 768px) {
+    :root {
+        --logo-size: min(260px, 55vw);
+        --glass-size: min(340px, 75vw);
+    }
+
     .logo {
-        width: min(260px, 55vw);
         border-radius: clamp(25px, 10vw, 40px);
     }
-    
-    /* Mobil qurilmalarda shisha fon ham logotipga mos ravishda kattalashadi */
+
     .logo-glass-bg {
-        width: min(340px, 75vw);
         border-radius: clamp(35px, 12vw, 55px);
+        /* Ijro bo'layotgan video ustidagi katta blur telefonda og'ir — yengillashtirildi */
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
     }
 }
 
 @media (max-width: 360px) {
+    :root {
+        --logo-size: min(180px, 50vw);
+        /* Eski 345px qiymat 320-360px ekranlarda ekrandan chiqib ketardi */
+        --glass-size: min(345px, 92vw);
+    }
+
     .logo {
-        width: 180px; 
         border-radius: 25px;
     }
 
     .logo-glass-bg {
-        width: 345px;
         border-radius: 35px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo,
+    .logo-glass-bg {
+        transition-duration: 0.01s;
     }
 }
