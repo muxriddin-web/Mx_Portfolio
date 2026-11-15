@@ -257,8 +257,8 @@ body {
 ===================== */
 .gta-reveal-footer {
     position: fixed;
-    bottom: 0; left: 0;
-    width: 100vw; height: 100vh;
+    /* top+bottom: sahna doim HAQIQIY ko'rinadigan maydonni to'ldiradi */
+    top: 0; right: 0; bottom: 0; left: 0;
     z-index: 1;
     background: #05050a;
     display: flex;
@@ -497,7 +497,6 @@ body {
 @media (max-height: 500px) and (orientation: landscape) {
     .gta-reveal-footer {
         bottom: 65px;
-        height: calc(100vh - 65px);
     }
     .scene-3d { flex-direction: row; gap: 10px; }
     .character-container { width: 40%; }
@@ -585,7 +584,6 @@ body {
        ===================================================== */
     .gta-reveal-footer {
         bottom: 65px;
-        height: calc(100vh - 65px);
         overflow-y: auto;
     }
 
@@ -684,4 +682,32 @@ body {
 /* Fixed fon faqat katta ekranli, sichqonchali qurilmada */
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
     .about { background-attachment: fixed; }
+}
+
+
+/* =========================================================
+   MOBIL SAHNA: rasm balandligi ekranga moslashadi
+   Sabab: rasm balandligi qat'iy 400px edi, sahna esa overflow:hidden + markazlash
+   bilan joylashgani uchun ekran past bo'lganda rasmning TEPA qismi kesilib,
+   "qora fon orqasiga kirib ketardi". Endi rasm mavjud joyga qarab kichrayadi
+   (baland telefonlarda avvalgi o'lchamida qoladi).
+   --scene-reserve = pastki navbar + paddinglar + oraliq + HUD (savol paneli) balandligi.
+   svh — manzil satri ko'ringanidagi (eng kichik) balandlik: barqaror, layout qayta hisoblanmaydi.
+   ========================================================= */
+@media (max-width: 860px) {
+  .gta-reveal-footer { --scene-reserve: 367px; }
+  .scene-3d { padding-block: 16px; }
+  .hologram-man {
+    height: clamp(120px, calc(100vh - var(--scene-reserve)), 390px);
+    height: clamp(120px, calc(100svh - var(--scene-reserve)), 390px);
+  }
+}
+
+@media (max-width: 480px) {
+  .gta-reveal-footer { --scene-reserve: 367px; }
+}
+
+/* Telefon gorizontal holatda: sahna qator bo'lib joylashadi, rasm alohida turadi */
+@media (max-height: 500px) and (orientation: landscape) {
+  .gta-reveal-footer { --scene-reserve: 135px; }
 }
