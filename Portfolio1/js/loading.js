@@ -130,12 +130,23 @@
     /* =========================================================
        AUDIO: VIDEO BILAN SINXRON
        ========================================================= */
+    // Audio video'dan qisqa (~16s). Tugagan audioda play() chaqirilsa u BOSHIDAN qayta boshlanadi —
+    // shuning uchun faqat audio hali tugamagan oraliqdagina davom ettiramiz.
+    function audioStillPlayable() {
+        if (!audio || audio.ended) return false;
+        return !isFinite(audio.duration) || video.currentTime < audio.duration - 0.05;
+    }
+
     function resyncAudio() {
-        if (!audio) return;
+        if (!audioStillPlayable()) return;
         const vt = video.currentTime;
-        if (isFinite(audio.duration) && vt < audio.duration && Math.abs(audio.currentTime - vt) > 0.35) {
+        if (isFinite(audio.duration) && Math.abs(audio.currentTime - vt) > 0.35) {
             try { audio.currentTime = vt; } catch (_) { /* e'tiborsiz */ }
         }
+    }
+
+    function resumeAudio() {
+        if (audioStillPlayable()) safePlay(audio);
     }
 
     /* =========================================================
@@ -216,7 +227,7 @@
             button1.style.display = 'none';
         }
         resyncAudio();
-        safePlay(audio);
+        resumeAudio();
         cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(loop);
     });
