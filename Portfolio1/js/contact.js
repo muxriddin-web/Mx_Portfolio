@@ -1,56 +1,97 @@
-const API_URL = "https://mx-portfolio.onrender.com"; // Render'dan olgan backend silkangiz
+'use strict';
 
-const form = document.getElementById("contact-form");
+const API_URL = "https://mx-portfolio.onrender.com"; // Render'dan olingan backend manzili
+const REQUEST_TIMEOUT_MS = 60000;   // Render bepul tarifi "uxlab qolgan" bo'lsa uyg'onishi 30-60s olishi mumkin
+const SLOW_HINT_MS = 6000;
+const ENABLE_VIDEO_ON_MOBILE = true; // telefonda orqa fon videosini o'chirish uchun false qiling
 
-form.addEventListener("submit", async (e) => {
+/* ==========================================================================
+   Contact form
+   Tuzatishlar:
+   - So'rov uchun timeout (eski kodda server uxlab yotganda tugma "Sending..." da
+     cheksiz qotib qolardi).
+   - Server HTML (502/504) qaytarsa response.json() xato bermasligi uchun xavfsiz parse.
+   - Sahifa ochilganda backend "uyg'otiladi" (warm-up), foydalanuvchi forma
+     to'ldirguncha server tayyor bo'ladi.
+   ========================================================================== */
+
+(function initContactForm() {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+
+  const button = form.querySelector(".glow-button");
+
+  // Backendni oldindan uyg'otish (javob kerak emas)
+  const warmUp = () => {
+    try {
+      fetch(API_URL, { method: "GET", mode: "no-cors", cache: "no-store" }).catch(() => {});
+    } catch (_) { /* e'tiborsiz */ }
+  };
+  if (document.readyState === "complete") {
+    setTimeout(warmUp, 500);
+  } else {
+    window.addEventListener("load", () => setTimeout(warmUp, 500), { once: true });
+  }
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const button = form.querySelector(".glow-button");
-
     const formData = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        message: document.getElementById("message").value.trim()
+      name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      message: document.getElementById("message").value.trim()
     };
 
     button.disabled = true;
     button.textContent = "Sending...";
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    const slowId = setTimeout(() => {
+      button.textContent = "Server is waking up...";
+    }, SLOW_HINT_MS);
+
     try {
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+        signal: controller.signal
+      });
 
-        const response = await fetch(`${API_URL}/api/contact`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        });
+      let data = {};
+      try {
+        data = await response.json();
+      } catch (_) { /* server JSON qaytarmadi */ }
 
-        const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || `Server error (${response.status}). Please try again.`);
+      }
 
-        if (!response.ok) {
-            throw new Error(data.message || "Something went wrong.");
-        }
-
-        alert("✅ Message sent successfully!");
-
-        form.reset();
+      alert("✅ Message sent successfully!");
+      form.reset();
 
     } catch (error) {
+      console.error(error);
 
-        console.error(error);
-
-        alert(error.message);
+      if (error.name === "AbortError") {
+        alert("The server took too long to respond. Please try again in a moment.");
+      } else if (error instanceof TypeError) {
+        alert("Network error. Please check your connection and try again.");
+      } else {
+        alert(error.message || "Something went wrong.");
+      }
 
     } finally {
-
-        button.disabled = false;
-        button.textContent = "Send Message";
-
+      clearTimeout(timeoutId);
+      clearTimeout(slowId);
+      button.disabled = false;
+      button.textContent = "Send Message";
     }
-});
-
-'use strict';
+  });
+})();
 
 /* ==========================================================================
    Utilities
@@ -98,8 +139,7 @@ class BubbleEngine {
     this.resize = this.resize.bind(this);
     this.tick = this.tick.bind(this);
 
-    this.resize();
-    this.populate();
+    this.resize(true);
   }
 
   buildSprites(colors) {
@@ -133,8 +173,15 @@ class BubbleEngine {
     }
   }
 
-  resize() {
+  /**
+   * Telefonda manzil satri yashirinib/ko'ringanda 'resize' hodisasi ketma-ket chaqiriladi.
+   * O'lcham aslida o'zgarmagan bo'lsa canvas qayta yaratilmaydi va zarrachalar
+   * qayta aralashtirilmaydi (eski kodda har safar sakrab/miltillab qolardi).
+   */
+  resize(force = false) {
     const { clientWidth, clientHeight } = this.canvas;
+    if (!force && clientWidth === this.width && clientHeight === this.height) return;
+
     this.width = clientWidth;
     this.height = clientHeight;
 
@@ -243,6 +290,7 @@ class BubbleEngine {
   stop() {
     this.isRunning = false;
     if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.rafId = null;
   }
 
   destroy() {
@@ -272,7 +320,9 @@ function initClock(el) {
   };
 
   update();
-  setInterval(update, 1000);
+  setInterval(() => {
+    if (!document.hidden) update();
+  }, 1000);
 }
 
 /* ==========================================================================
@@ -461,10 +511,116 @@ function initBackToTop(button) {
 }
 
 /* ==========================================================================
+   Background video — sahifa interaktiv bo'lgandan KEYIN yuklanadi
+   Tuzatishlar:
+   - Eski holatda <video autoplay> sahifa ochilishi bilan katta faylni
+     yuklashni boshlardi va forma/menyu bilan raqobatlashardi.
+   - Ekrandan chiqqanda va tab yashirilganda to'xtaydi (batareya va CPU).
+   - Tarmoq "saveData" rejimida yoki reduced-motion'da yuklanmaydi.
+   ========================================================================== */
+
+function initBackgroundVideo() {
+  const video = document.querySelector('.bg-video');
+  if (!video) return;
+
+  const src = video.dataset.src;
+  if (!src) return;
+
+  const conn = navigator.connection;
+  if (prefersReducedMotion || (conn && conn.saveData)) return;
+  if (!ENABLE_VIDEO_ON_MOBILE && window.matchMedia('(max-width: 768px)').matches) return;
+
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+  video.setAttribute('muted', '');
+
+  let started = false;
+  let inView = true;
+
+  const sync = () => {
+    if (!started) return;
+    if (inView && !document.hidden) {
+      const p = video.play();
+      if (p && p.catch) p.catch(() => {});
+    } else {
+      video.pause();
+    }
+  };
+
+  const start = () => {
+    if (started) return;
+    started = true;
+    video.addEventListener('playing', () => video.classList.add('is-ready'), { once: true });
+    video.src = src;
+    sync();
+  };
+
+  const startWhenIdle = () => {
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(start, { timeout: 2500 });
+    } else {
+      setTimeout(start, 400);
+    }
+  };
+
+  if (document.readyState === 'complete') {
+    startWhenIdle();
+  } else {
+    window.addEventListener('load', startWhenIdle, { once: true });
+  }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      sync();
+    }, { threshold: 0.05 }).observe(video);
+  }
+
+  document.addEventListener('visibilitychange', sync);
+}
+
+/* ==========================================================================
+   Boshqa sahifalarni bo'sh vaqtda oldindan yuklash (menyu tez ochilishi uchun)
+   ========================================================================== */
+
+function initPagePrefetch() {
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''))) return;
+
+  const run = () => {
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
+    idle(() => {
+      const seen = new Set();
+      document.querySelectorAll('.nav-links a[href]').forEach((a) => {
+        const url = new URL(a.getAttribute('href'), window.location.href);
+        if (url.origin !== window.location.origin) return;
+        if (url.pathname === window.location.pathname || seen.has(url.pathname)) return;
+        seen.add(url.pathname);
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'document';
+        link.href = url.href;
+        document.head.appendChild(link);
+      });
+    });
+  };
+
+  if (document.readyState === 'complete') run();
+  else window.addEventListener('load', run, { once: true });
+}
+
+/* ==========================================================================
    Init
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initBackgroundVideo();
+  initPagePrefetch();
+
   const footer = document.querySelector('.site-footer');
   if (!footer) return;
 
@@ -483,9 +639,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('bubbleCanvas');
   if (canvas) {
     const engine = new BubbleEngine(canvas);
+    let footerInView = false;
 
     const visibilityObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
+      footerInView = entry.isIntersecting;
+      if (footerInView && !document.hidden) {
         engine.start();
       } else {
         engine.stop();
@@ -497,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', debounce(() => engine.resize(), 150), { passive: true });
 
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
+      if (document.hidden || !footerInView) {
         engine.stop();
       } else {
         engine.start();
