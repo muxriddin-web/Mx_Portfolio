@@ -100,10 +100,12 @@ body {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Uchib ketayotgan karta (translateX) sahifani kengaytirib yubormasligi uchun.
+       Aks holda mobil brauzer layout viewport'ni kengaytirib, sahifa "zoom-out" bo'lib buziladi. */
+    overflow: hidden;
 }
 
 .skills-container {
@@ -136,7 +138,10 @@ body {
     width: 300px;
     height: 340px;
     margin: 0 auto;
-    touch-action: none;
+    /* pan-y: vertikal skroll ishlayveradi, gorizontal swipe'ni biz boshqaramiz */
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Bazaviy GLASS (suv shisha) dizayn */
@@ -174,6 +179,10 @@ body {
 
     transition: transform 0.2s ease-out, z-index 0s;
     cursor: grab;
+}
+
+/* will-change faqat eng tepadagi kartada (16 ta kartaga bir vaqtda berilsa GPU xotirasi tugaydi) */
+.skill.is-front {
     will-change: transform;
 }
 
@@ -406,4 +415,20 @@ body {
 .filter-btn.active {
     background: #eb0afb;
     box-shadow: 0 0 15px rgba(235, 10, 251, 0.85);
+}
+
+/* =====================
+   PERFORMANCE
+===================== */
+@media (max-width: 768px) {
+    /* Backdrop-filter telefonda eng og'ir effekt: blur kamaytirildi, saturate olib tashlandi */
+    .skill {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
+
+/* Fixed fon faqat katta ekranli, sichqonchali qurilmada */
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    .skills-section { background-attachment: fixed; }
 }
