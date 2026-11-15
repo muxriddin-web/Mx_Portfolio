@@ -1,121 +1,227 @@
-/* ─── CARD STACK (asl namunadagi mantiq bilan bir xil) ─── */
-const skillsStack = document.querySelector(".skills-stack");
-let allCards = [...document.querySelectorAll(".skill")];
-let cards = [...allCards];
-let isSwiping = false;
-let startX = 0;
-let currentX = 0;
+(() => {
+    'use strict';
 
-function updateCardPositions() {
-    cards.forEach((card, index) => {
-        card.style.zIndex = index;
-        card.style.transform = `scale(${1 - (cards.length - 1 - index) * 0.05})`;
+    /* =========================================================
+       CARD STACK
+       Tuzatilgan xatolar:
+       1) Filtrda `display: block` qo'yilardi — bu .skill ning flex-markazlashuvini
+          buzardi (filtrdan keyin kartalar "siljib ketardi").
+       2) Tez-tez swipe qilinganda setTimeout'lar ustma-ust tushib, `cards` massivi
+          va DOM tartibi bir-biriga mos kelmay qolardi — endi isAnimating qulfi bor.
+       3) Uchib ketayotgan karta (translateX 300px) sahifani kengaytirib, mobil
+          brauzerda butun layout "zoom-out" bo'lib buzilardi — endi uchish masofasi
+          ekranga moslangan va .skills-section overflow:hidden.
+       4) 16 ta karta bir vaqtda backdrop-filter bilan chizilardi — endi faqat
+          tepadagi MAX_VISIBLE tasi ko'rinadi.
+       5) touch-action:none butun sahifa skrollini bloklardi — endi pan-y.
+       ========================================================= */
+
+    const stack = document.querySelector('.skills-stack');
+    if (!stack) return;
+
+    const MAX_VISIBLE = 4;       // bir vaqtda chiziladigan kartalar soni
+    const SWIPE_THRESHOLD = 50;  // px
+
+    const allCards = Array.from(stack.querySelectorAll('.skill'));
+    let cards = allCards.slice(); // oxirgi element = eng tepadagi karta
+
+    let isAnimating = false;
+    let pendingFilter = null;
+    let dragging = false;
+    let activePointer = null;
+    let startX = 0;
+    let deltaX = 0;
+    let dragRaf = 0;
+
+    const vibrate = (ms) => {
+        try { if (navigator.vibrate) navigator.vibrate(ms); } catch (_) { /* e'tiborsiz */ }
+    };
+
+    /* ─── KARTALARNI JOYLASH ─── */
+    function layout() {
+        const n = cards.length;
+        cards.forEach((card, index) => {
+            const depth = n - 1 - index;
+            card.style.zIndex = String(index);
+            card.style.transform = `scale(${1 - depth * 0.05})`;
+            card.style.visibility = depth >= MAX_VISIBLE ? 'hidden' : 'visible';
+            card.classList.toggle('is-front', depth === 0);
+        });
+    }
+
+    /* ─── SWIPE (Pointer Events: sichqoncha + touch + stylus bitta kodda) ─── */
+    stack.addEventListener('pointerdown', (e) => {
+        if (isAnimating || dragging || !cards.length) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+        dragging = true;
+        activePointer = e.pointerId;
+        startX = e.clientX;
+        deltaX = 0;
+
+        cards[cards.length - 1].style.transition = 'none';
+        try { stack.setPointerCapture(e.pointerId); } catch (_) { /* e'tiborsiz */ }
     });
-}
 
-function handleStart(e) {
-    isSwiping = true;
-    startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    cards[cards.length - 1].style.transition = "none";
-}
+    stack.addEventListener('pointermove', (e) => {
+        if (!dragging || e.pointerId !== activePointer) return;
+        deltaX = e.clientX - startX;
+        if (!dragRaf) dragRaf = requestAnimationFrame(paintDrag);
+    });
 
-function handleMove(e) {
-    if (!isSwiping) return;
-    let clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    currentX = clientX - startX;
-    cards[cards.length - 1].style.transform = `translateX(${currentX}px) rotate(${currentX / 10}deg)`;
-}
+    function paintDrag() {
+        dragRaf = 0;
+        if (!dragging || !cards.length) return;
+        cards[cards.length - 1].style.transform = `translateX(${deltaX}px) rotate(${deltaX / 10}deg)`;
+    }
 
-function handleEnd() {
-    if (!isSwiping) return;
-    isSwiping = false;
+    function endDrag(e) {
+        if (!dragging || e.pointerId !== activePointer) return;
+        dragging = false;
 
-    let activeCard = cards[cards.length - 1];
-    let direction = currentX > 0 ? 1 : -1;
+        cancelAnimationFrame(dragRaf);
+        dragRaf = 0;
+        try { stack.releasePointerCapture(activePointer); } catch (_) { /* e'tiborsiz */ }
+        activePointer = null;
 
-    if (Math.abs(currentX) > 50) {
-        if (navigator.vibrate) {
-            navigator.vibrate(30);
+        const card = cards[cards.length - 1];
+        const dx = deltaX;
+        deltaX = 0;
+        if (!card) return;
+
+        const cancelled = e.type === 'pointercancel';
+        if (!cancelled && Math.abs(dx) > SWIPE_THRESHOLD && cards.length > 1) {
+            flingOut(card, dx > 0 ? 1 : -1);
+        } else {
+            card.style.transition = 'transform 0.3s ease';
+            card.style.transform = 'translateX(0) scale(1)';
         }
+    }
 
-        activeCard.style.transition = "transform 0.4s ease-out";
-        activeCard.style.transform = `translateX(${direction * 300}px) scale(0.8)`;
+    stack.addEventListener('pointerup', endDrag);
+    stack.addEventListener('pointercancel', endDrag);
+
+    function flingOut(card, direction) {
+        isAnimating = true;
+        vibrate(30);
+
+        // Kartani ekrandan tashqariga emas, ekran kengligiga moslab uchiramiz
+        const distance = Math.min(300, Math.round(window.innerWidth * 0.8));
+
+        card.style.transition = 'transform 0.4s ease-out';
+        card.style.transform = `translateX(${direction * distance}px) scale(0.8)`;
 
         setTimeout(() => {
-            skillsStack.prepend(activeCard);
+            stack.prepend(card);
             cards.unshift(cards.pop());
 
-            activeCard.style.transition = "none";
-            activeCard.style.transform = `translateX(${direction * 300}px) scale(0.8)`;
+            card.style.transition = 'none';
+            card.style.transform = `translateX(${direction * distance}px) scale(0.8)`;
 
-            activeCard.offsetWidth;
+            void card.offsetWidth; // reflow — keyingi transition to'g'ri boshlanishi uchun
 
-            activeCard.style.transition = "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-            updateCardPositions();
+            card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            layout();
+            vibrate(50);
 
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
+            isAnimating = false;
+            if (pendingFilter !== null) {
+                const f = pendingFilter;
+                pendingFilter = null;
+                applyFilter(f);
             }
         }, 400);
-    } else {
-        activeCard.style.transition = "transform 0.3s ease";
-        activeCard.style.transform = "translateX(0) scale(1)";
     }
-    currentX = 0;
-}
 
-// Hodisalarni ulash (asl namunadagi kabi)
-skillsStack.addEventListener("mousedown", handleStart);
-document.addEventListener("mousemove", handleMove);
-document.addEventListener("mouseup", handleEnd);
-
-skillsStack.addEventListener("touchstart", handleStart);
-document.addEventListener("touchmove", handleMove);
-document.addEventListener("touchend", handleEnd);
-
-updateCardPositions();
-
-/* ─── SKILL BAR ANIMATION ─── */
-const skillLevels = document.querySelectorAll(".skill-level");
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.width = entry.target.dataset.skill + "%";
-        }
-    });
-}, {
-    threshold: 0.3
-});
-skillLevels.forEach(level => observer.observe(level));
-
-/* ─── NAVBAR ACTIVE ─── */
-const currentPage = window.location.pathname.split("/").pop() || "skills.html";
-document.querySelectorAll(".nav-links a").forEach(link => {
-    if (link.getAttribute("href") === currentPage) {
-        link.classList.add("active");
-    }
-});
-
-/* ─── FILTER BUTTONS ─── */
-document.addEventListener("DOMContentLoaded", () => {
-    const filterButtons = document.querySelectorAll(".filter-btn");
-
-    filterButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            document.querySelector(".filter-btn.active").classList.remove("active");
-            button.classList.add("active");
-            const filter = button.dataset.filter;
-
-            allCards.forEach(card => {
-                const show = filter === "all" || card.dataset.category === filter;
-                card.style.display = show ? "block" : "none";
+    /* ─── SKILL BAR ANIMATION ─── */
+    const skillLevels = document.querySelectorAll('.skill-level');
+    if ('IntersectionObserver' in window) {
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.dataset.skill + '%';
+                    barObserver.unobserve(entry.target);
+                }
             });
+        }, { threshold: 0.3 });
+        skillLevels.forEach((level) => barObserver.observe(level));
+    } else {
+        skillLevels.forEach((level) => { level.style.width = level.dataset.skill + '%'; });
+    }
 
-            cards = allCards.filter(card =>
-                filter === "all" || card.dataset.category === filter
-            );
-
-            updateCardPositions();
-        });
+    /* ─── NAVBAR ACTIVE ─── */
+    const pageName = (path) => (path.split('/').pop().replace(/\.html$/i, '') || 'index').toLowerCase();
+    const currentPage = pageName(window.location.pathname);
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+        const target = pageName(new URL(link.getAttribute('href'), window.location.href).pathname);
+        if (target === currentPage) link.classList.add('active');
     });
-});
+
+    /* ─── FILTER BUTTONS ─── */
+    function applyFilter(filter) {
+        cards = allCards.filter((card) => filter === 'all' || card.dataset.category === filter);
+
+        allCards.forEach((card) => {
+            // MUHIM: '' — stylesheet'dagi display:flex qaytadi ('block' qo'yish layoutni buzardi)
+            card.style.display = cards.includes(card) ? '' : 'none';
+        });
+
+        layout();
+    }
+
+    function initFilters() {
+        const buttons = document.querySelectorAll('.filter-btn');
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const current = document.querySelector('.filter-btn.active');
+                if (current) current.classList.remove('active');
+                button.classList.add('active');
+
+                const filter = button.dataset.filter || 'all';
+
+                // Karta uchib ketayotgan paytda holatni buzmaslik uchun navbatga qo'yamiz
+                if (isAnimating || dragging) {
+                    pendingFilter = filter;
+                    return;
+                }
+                applyFilter(filter);
+            });
+        });
+    }
+
+    layout();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilters);
+    } else {
+        initFilters();
+    }
+
+    /* ─── BOSHQA SAHIFALARNI BO'SH VAQTDA OLDINDAN YUKLASH ─── */
+    (function prefetchPages() {
+        const conn = navigator.connection;
+        if (conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''))) return;
+
+        const run = () => {
+            const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
+            idle(() => {
+                const seen = new Set();
+                document.querySelectorAll('.nav-links a[href]').forEach((a) => {
+                    const url = new URL(a.getAttribute('href'), window.location.href);
+                    if (url.origin !== window.location.origin) return;
+                    if (url.pathname === window.location.pathname || seen.has(url.pathname)) return;
+                    seen.add(url.pathname);
+                    const link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.as = 'document';
+                    link.href = url.href;
+                    document.head.appendChild(link);
+                });
+            });
+        };
+
+        if (document.readyState === 'complete') run();
+        else window.addEventListener('load', run, { once: true });
+    })();
+})();
