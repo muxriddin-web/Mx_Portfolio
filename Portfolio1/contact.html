@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="view-transition" content="same-origin">
     <title>Portfolio - Contact</title>
     <link rel="icon" type="image/svg+xml" href="./logosvg/rockstar-games.svg"/>
+    <!-- PERFORMANCE: CDN bilan ulanishni oldindan ochish va shriftni erta yuklash -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" href="./type/pricedown-bl.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
@@ -18,7 +20,7 @@
 
     <!-- NAVBAR -->
     <nav class="navbar">
-         <a href="./index.html" class="logo">PORTFOL1O V1</a>
+         <a href="./index.html" class="logo">PORTFOLIO VI</a>
         <ul class="nav-links">
             <li>
                 <a href="./index.html" class="glow-link">
@@ -59,9 +61,8 @@
     <section id="contact-page" class="contact">
 
         <!-- Background video -->
-        <video autoplay muted loop playsinline preload="metadata" class="bg-video">
-            <source src="./imges/gta video city.mp4" type="video/mp4">
-        </video>
+        <video muted loop playsinline preload="none" class="bg-video" aria-hidden="true"
+               disablepictureinpicture data-src="./imges/gta video city.mp4"></video>
 
         <!-- Overlay -->
         <div class="overlay"></div>
@@ -123,7 +124,7 @@
       <div class="footer-grid">
 
         <div class="footer-col footer-col--brand" data-reveal>
-          <a href="#top" class="brand-logo" aria-label="Velor — back to top">
+          <a href="#top" class="brand-logo" aria-label="Back to top">
             Web Developer<span class="brand-logo__dot">.</span>
           </a>
           <p class="brand-desc">
@@ -131,7 +132,7 @@
 
           <ul class="social-list">
             <li>
-              <a class="social-link" href="muxriddinotkirov111@gmail.com" aria-label="Send an email" data-tip="Email">
+              <a class="social-link" href="mailto:muxriddinotkirov111@gmail.com" aria-label="Send an email" data-tip="Email">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
                   <rect x="3" y="5" width="18" height="14" rx="2.4"/>
                   <path d="M4 6.5L11.2 12.4a1.4 1.4 0 0 0 1.6 0L20 6.5"/>
@@ -148,7 +149,7 @@
               </a>
             </li>
             <li>
-              <a class="social-link" href="www.linkedin.com/in/muxriddin-o-tkirov-451728420" target="_blank" rel="noopener noreferrer" aria-label="Visit LinkedIn profile" data-tip="LinkedIn">
+              <a class="social-link" href="https://www.linkedin.com/in/muxriddin-o-tkirov-451728420" target="_blank" rel="noopener noreferrer" aria-label="Visit LinkedIn profile" data-tip="LinkedIn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
                   <rect x="3.5" y="3.5" width="17" height="17" rx="3"/>
                   <path d="M8 10.5V17M8 7.7v.01M12.2 17v-4.1c0-1.3.9-2.2 2-2.2s1.8.9 1.8 2.2V17"/>
@@ -196,7 +197,7 @@
         <div class="footer-col footer-col--connect" data-reveal>
           <h2 class="col-title">Connect</h2>
           <ul class="link-list">
-            <li><a class="footer-link" href="muxriddinotkirov111@gmail.com">Email</a></li>
+            <li><a class="footer-link" href="mailto:muxriddinotkirov111@gmail.com">Email</a></li>
             <li><a class="footer-link" href="https://github.com/muxriddin-web" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             <li><a class="footer-link" href="https://www.linkedin.com/in/muxriddin-o-tkirov-451728420" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
             <li><a class="footer-link" href="https://t.me/M_FS_Developer" target="_blank" rel="noopener noreferrer">Telegram</a></li>
