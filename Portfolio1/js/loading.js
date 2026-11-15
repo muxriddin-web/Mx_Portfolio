@@ -1,56 +1,249 @@
-const letter = document.getElementById("letter");
-const star = document.getElementById("star");
-const logo = document.getElementById("logo");
-const glassBg = document.getElementById("glassBg");
+(() => {
+    'use strict';
 
-const video = document.getElementById("bg-video");
-const audio = document.getElementById("bg-audio");
-const button1 = document.getElementById("button1");
-const button2 = document.getElementById("button2");
+    /* =========================================================
+       SOZLAMALAR
+       ========================================================= */
+    const VIDEO_SRC = './R loading video.mp4';
+    const SHOW_AT = 13;              // video 13-sekundga yetganda: M + yulduz + shisha chiqadi
+    const HIDE_AT = 17;              // video 17-sekundga yetganda: yo'qoladi
+    const START_TIMEOUT_MS = 20000;  // video shu vaqtda boshlanmasa — saytga o'tish tugmasi chiqadi
 
-video.muted = true;
+    /* =========================================================
+       ELEMENTLAR
+       ========================================================= */
+    const $ = (id) => document.getElementById(id);
+    const letter = $('letter');
+    const star = $('star');
+    const logo = $('logo');
+    const glassBg = $('glassBg');
+    const video = $('bg-video');
+    const audio = $('bg-audio');
+    const button1 = $('button1');
+    const button2 = $('button2');
 
-// M + yulduz va shafof oynaning boshlang'ich holati (ko'rinmaydi)
-letter.style.opacity = "0";
-star.style.opacity = "0";
-glassBg.style.opacity = "0";
+    if (!video || !button1) return;
 
-// Button1 bosilganda
-button1.addEventListener("click", () => {
-    video.src = "./R loading video.mp4";
-    video.play();
-    audio.currentTime = 0;
-    audio.play();
+    const setOpacity = (el, value) => { if (el) el.style.opacity = value; };
+    const safePlay = (media) => {
+        if (!media) return;
+        try {
+            const p = media.play();
+            if (p && p.catch) p.catch(() => {});
+        } catch (_) { /* e'tiborsiz */ }
+    };
 
-    button1.style.display = "none";
+    /* =========================================================
+       VIDEO: REAL TELEFON (iOS Safari / Android Chrome) UCHUN SHARTLAR
+       - playsinline bo'lmasa iPhone videoni to'liq ekranda ochadi va
+         ustidagi M-logo va shisha oyna umuman ko'rinmaydi.
+       ========================================================= */
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.autoplay = false;
+    video.removeAttribute('autoplay');
+    video.controls = false;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('disablepictureinpicture', '');
+    video.preload = 'auto';
 
-    // 12-sekundda: M harfi, yulduz va shafof oyna birga chiqadi
-    setTimeout(() => {
-        letter.innerHTML = "<i>M</i>";
-        letter.style.opacity = "1";
-        star.style.opacity = "1";
-        
-        // Shafof oynani ko'rsatish
-        glassBg.style.opacity = "1";
-        
-        // Fon va razmerni kattalashtirish
-        logo.classList.add("blue-bg", "scale-up");
-    }, 13000);
+    // Boshlang'ich holat (ko'rinmaydi)
+    setOpacity(letter, '0');
+    setOpacity(star, '0');
+    setOpacity(glassBg, '0');
 
-    // 15-sekundda: M, yulduz va shafof oyna yo'qoladi
-    setTimeout(() => {
-        letter.style.opacity = "0";
-        star.style.opacity = "0";
-        glassBg.style.opacity = "0"; // Shafof oyna o'chadi
-        logo.classList.remove("blue-bg");
-    }, 17000);
-});
+    /* =========================================================
+       HOLAT
+       ========================================================= */
+    let started = false;       // tugma bosildimi
+    let playedOnce = false;    // video haqiqatan ijro boshladimi
+    let finished = false;      // video tugadimi yoki xatolik bo'ldi
+    let phase = 0;             // 0 = logo hali yo'q, 1 = ko'rinib turibdi, 2 = yo'qolgan
+    let rafId = 0;
+    let watchdogId = 0;
+    let srcAssigned = false;
 
-// Video tugaganda
-video.addEventListener("ended", () => {
-    audio.pause();
-    audio.currentTime = 0;
-    button2.style.display = "block"; 
-    logo.classList.remove("scale-up");
-    glassBg.style.opacity = "0"; 
-});
+    /* =========================================================
+       VIDEONI OLDINDAN YUKLASH
+       Sahifa to'liq yuklangach, foydalanuvchi tugmani bosguncha video
+       fonda yuklana boshlaydi — shunda bosganda kutish bo'lmaydi.
+       (Agar HTML'da allaqachon src berilgan bo'lsa, tegmaymiz.)
+       ========================================================= */
+    function preloadVideo() {
+        if (srcAssigned || started) return;
+        const conn = navigator.connection;
+        if (conn && conn.saveData) return;
+        if (video.getAttribute('src') || video.querySelector('source')) return;
+        video.src = VIDEO_SRC;
+        srcAssigned = true;
+    }
+
+    if (document.readyState === 'complete') {
+        preloadVideo();
+    } else {
+        window.addEventListener('load', preloadVideo, { once: true });
+    }
+
+    /* =========================================================
+       LOGO: VIDEO HAQIQIY VAQTIGA QARAB (setTimeout EMAS)
+       Real telefonda video internet tufayli kechikib boshlanadi.
+       Eski kodda setTimeout(13000) bosilgan paytdan sanalgani uchun
+       logo videoga nisbatan erta chiqib ketardi.
+       ========================================================= */
+    function showLogo() {
+        if (letter) letter.innerHTML = '<i>M</i>';
+        setOpacity(letter, '1');
+        setOpacity(star, '1');
+        setOpacity(glassBg, '1');
+        if (logo) logo.classList.add('blue-bg', 'scale-up');
+    }
+
+    function hideLogo() {
+        setOpacity(letter, '0');
+        setOpacity(star, '0');
+        setOpacity(glassBg, '0');
+        if (logo) logo.classList.remove('blue-bg');
+    }
+
+    function syncTimeline() {
+        const t = video.currentTime;
+        if (phase < 1 && t >= SHOW_AT && t < HIDE_AT) {
+            phase = 1;
+            showLogo();
+        }
+        if (phase < 2 && t >= HIDE_AT) {
+            if (phase === 1) hideLogo();
+            phase = 2;
+        }
+    }
+
+    function loop() {
+        syncTimeline();
+        if (!video.paused && !video.ended) {
+            rafId = requestAnimationFrame(loop);
+        }
+    }
+
+    /* =========================================================
+       AUDIO: VIDEO BILAN SINXRON
+       ========================================================= */
+    function resyncAudio() {
+        if (!audio) return;
+        const vt = video.currentTime;
+        if (isFinite(audio.duration) && vt < audio.duration && Math.abs(audio.currentTime - vt) > 0.35) {
+            try { audio.currentTime = vt; } catch (_) { /* e'tiborsiz */ }
+        }
+    }
+
+    /* =========================================================
+       YAKUN / XATOLIK
+       ========================================================= */
+    function revealNextButton() {
+        button1.style.display = 'none';
+        if (button2) button2.style.display = 'block';
+    }
+
+    function finish() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(watchdogId);
+        cancelAnimationFrame(rafId);
+        if (audio) {
+            audio.pause();
+            try { audio.currentTime = 0; } catch (_) { /* e'tiborsiz */ }
+        }
+        if (logo) logo.classList.remove('scale-up');
+        setOpacity(glassBg, '0');
+        setOpacity(letter, '0');
+        setOpacity(star, '0');
+        revealNextButton();
+    }
+
+    function fallback(reason) {
+        if (finished) return;
+        console.warn('[loading] video ijro bo\'lmadi:', reason);
+        try { video.pause(); } catch (_) { /* e'tiborsiz */ }
+        finish();
+    }
+
+    /* =========================================================
+       TUGMA BOSILGANDA
+       ========================================================= */
+    button1.addEventListener('click', () => {
+        if (started) return;
+        started = true;
+
+        // Bosilganda darhol fikr-mulohaza — telefonda yuklanish uzoq bo'lishi mumkin
+        button1.textContent = 'Loading...';
+        button1.style.pointerEvents = 'none';
+
+        if (!srcAssigned) {
+            video.src = VIDEO_SRC;
+            srcAssigned = true;
+        }
+
+        // MUHIM: play() foydalanuvchi bosgan zahoti chaqirilishi shart (iOS talabi).
+        // Video yuklanguncha brauzer o'zi kutadi, biz vaqtni video bo'yicha kuzatamiz.
+        const p = video.play();
+        if (p && p.catch) {
+            p.catch((err) => {
+                if (err && err.name === 'AbortError') return;
+                fallback(err && err.name ? err.name : 'play() rad etildi');
+            });
+        }
+
+        if (audio) {
+            try { audio.currentTime = 0; } catch (_) { /* e'tiborsiz */ }
+            safePlay(audio);
+        }
+
+        watchdogId = setTimeout(() => {
+            if (!playedOnce) fallback('timeout');
+        }, START_TIMEOUT_MS);
+    });
+
+    /* =========================================================
+       VIDEO HODISALARI
+       ========================================================= */
+    video.addEventListener('playing', () => {
+        if (finished) return;
+        if (!playedOnce) {
+            playedOnce = true;
+            clearTimeout(watchdogId);
+            button1.style.display = 'none';
+        }
+        resyncAudio();
+        safePlay(audio);
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(loop);
+    });
+
+    // Video buferlanayotganda audio oldinga ketib qolmasin
+    video.addEventListener('waiting', () => { if (audio) audio.pause(); });
+
+    video.addEventListener('pause', () => {
+        if (!video.ended && audio) audio.pause();
+    });
+
+    // Zaxira: rAF to'xtab qolsa ham timeline yurib turadi
+    video.addEventListener('timeupdate', syncTimeline);
+
+    video.addEventListener('ended', finish);
+    video.addEventListener('error', () => {
+        if (started) fallback('video xatosi');
+    });
+
+    // Telefon boshqa ilovaga o'tsa — to'xtatamiz, qaytsa — davom ettiramiz
+    document.addEventListener('visibilitychange', () => {
+        if (!started || finished) return;
+        if (document.hidden) {
+            video.pause();
+            if (audio) audio.pause();
+        } else {
+            safePlay(video);
+        }
+    });
+})();
