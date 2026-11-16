@@ -5,8 +5,8 @@
        SOZLAMALAR
        ========================================================= */
     const VIDEO_SRC = './R loading video.mp4';
-    const SHOW_AT = 13;              // video 13-sekundga yetganda: M + yulduz + shisha chiqadi
-    const HIDE_AT = 17;              // video 17-sekundga yetganda: yo'qoladi
+    const SHOW_AT = 14;              // video 13-sekundga yetganda: M + yulduz + shisha chiqadi
+    const HIDE_AT = 16;              // video 17-sekundga yetganda: yo'qoladi
     const START_TIMEOUT_MS = 20000;  // video shu vaqtda boshlanmasa — saytga o'tish tugmasi chiqadi
 
     /* ---- M-logo geometriyasi (videodagi R logoni yopish uchun) ----
