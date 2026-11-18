@@ -6,17 +6,6 @@
     text-size-adjust: 100%;
 }
 
-:root {
-    /* Logotip va qoplama o'lchamlari — barcha o'lchamlar shu o'zgaruvchilardan hisoblanadi.
-       Video yuklangach loading.js ularni videodagi R logoning ekrandagi o'lchami va o'rniga
-       qarab qayta yozadi (--logo-size, --glass-size, --logo-dx, --logo-dy).
-       Quyidagilar faqat video hali yuklanmagan paytdagi boshlang'ich qiymatlar. */
-    --logo-size: 170px;
-    --glass-size: calc(var(--logo-size) * 1.45);   /* = logo scale-up dan keyingi o'lchami */
-    --logo-dx: 0px;
-    --logo-dy: 0px;
-}
-
 html,
 body {
     height: 100%;
@@ -26,7 +15,7 @@ body {
     overflow: hidden;
     font-family: "Nunito Sans", sans-serif;
     min-height: 100vh;
-    background: #0b0b14;
+    background: #000;
     overscroll-behavior: none;
 }
 
@@ -37,12 +26,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    /* Video vertikal (1080x1920): telefonda butun ekranni to'ldiradi */
     object-fit: cover;
     object-position: center;
     z-index: -2;
-    background: black;
+    background: #000;
     pointer-events: none;
 }
+
+/* Keng (gorizontal) ekranlarda vertikal videoni kesib tashlamaslik uchun
+   butun kadr ko'rsatiladi (yon tomonlari qora — videoning o'z chekkalari ham qora). */
+@media (min-aspect-ratio: 1/1) {
+    #bg-video {
+        object-fit: contain;
+    }
+}
+
 #bg-audio {
     display: none;
 }
@@ -109,140 +108,4 @@ body {
     color: #ffffff;
     border-color: #2ecc71;
     box-shadow: 0 0 20px rgba(46, 204, 113, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-/* === LOGO VA ANIMATSIYALAR === */
-.logo-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* R logo videoda ekran markazida bo'lmasligi mumkin — JS shu siljishni beradi */
-    transform: translate(var(--logo-dx), var(--logo-dy));
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Markazga keltirish uchun */
-    pointer-events: none; /* tugmalarni bosishga xalaqit bermasin */
-}
-
-/* JS orqali class qo'shilganda paydo bo'ladigan holat */
-.logo-glass-bg.show-glass {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.logo {
-    position: relative; /* Ichidagi absolute elementlar to'g'ri turishi uchun shart */
-    width: var(--logo-size);
-    aspect-ratio: 1 / 1;
-    height: auto;
-    border-radius: calc(var(--logo-size) * 0.18);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* `transition: all` o'rniga faqat kerakli xossalar */
-    transition: transform 0.8s ease, background-color 0.8s ease, border-color 0.8s ease;
-    background-color: transparent;
-    border: calc(var(--logo-size) * 0.03) solid transparent;
-    z-index: 2;
-}
-
-/* Qoplama: videodagi R logoni YOPADI. Avvalgi yarim shaffof "shisha" (15% oq + blur) R ni
-   to'liq yopmasdi va telefonda qora fonda kulrang ramka bo'lib ko'rinardi. Endi u M ning
-   o'z rangidagi yaxlit qoplama va M ning aynan orqasida turadi: M o'sib chiqquncha R ko'rinmaydi,
-   M joyiga tushgach esa qoplama uning ostida butunlay yashirin qoladi (ramka ko'rinmaydi).
-   backdrop-filter olib tashlandi: Android'da video ustida u videoni qora qilib yuborishi mumkin. */
-.logo-glass-bg {
-    position: absolute;
-    width: var(--glass-size);
-    aspect-ratio: 1 / 1;
-    background-color: #007BFF;
-    border-radius: calc(var(--glass-size) * 0.18);
-    z-index: 1; /* Logotipning ostida (ortida) turishi uchun */
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    /* Boshlang'ich holatda ko'rinmaydi */
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-}
-
-.logo.blue-bg {
-    background-color: #007BFF;
-    border-color: #000000;
-}
-
-.logo.scale-up {
-    transform: scale(1.45);
-}
-
-/* Harf va yulduz o'lchamlari logo o'lchamiga proporsional (eski `cqi` birliklari o'rniga) */
-.r-star {
-    font-size: calc(var(--logo-size) * 0.47);
-    font-weight: bold;
-    color: black;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-}
-
-.r-star .r {
-    position: relative;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-text-stroke: 0.02em black;
-    transform: translate(-21%, -12%);
-    transition: opacity 0.5s ease;
-    text-shadow:
-        0.02em 0 black,
-        -0.02em 0 black,
-        0 0.01em black,
-        0 -0.02em black;
-}
-
-.r-star .star {
-    position: absolute;
-    top: 63%;
-    left: 67.5%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.5s ease;
-}
-
-.r-star svg {
-    width: calc(var(--logo-size) * 0.42);
-    height: calc(var(--logo-size) * 0.31);
-    fill: rgb(255, 255, 255);
-    stroke: black;
-    stroke-width: 1.5px;
-}
-
-/* === MOBIL (RESPONSIV) QISMI ===
-   Faqat video geometriyasi aniqlanguncha ishlatiladigan boshlang'ich o'lcham.
-   Eski 360px maxsus qoidasi (logo 180px, shisha 345px) olib tashlandi: aynan shu 360px
-   telefonlarda logo kichikroq, kulrang ramka esa kattaroq chiqib, DevTools'dan farq qilardi. */
-@media (max-width: 768px) {
-    :root {
-        --logo-size: min(260px, 55vw);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .logo,
-    .logo-glass-bg {
-        transition-duration: 0.01s;
-    }
 }
