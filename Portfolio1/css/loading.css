@@ -26,20 +26,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Video vertikal (1080x1920): telefonda butun ekranni to'ldiradi */
+    /* Telefonda vertikal video, kompyuterda gorizontal video (loading.js tanlaydi) — ikkalasi ham ekranni to'ldiradi */
     object-fit: cover;
     object-position: center;
     z-index: -2;
     background: #000;
     pointer-events: none;
-}
-
-/* Keng (gorizontal) ekranlarda vertikal videoni kesib tashlamaslik uchun
-   butun kadr ko'rsatiladi (yon tomonlari qora — videoning o'z chekkalari ham qora). */
-@media (min-aspect-ratio: 1/1) {
-    #bg-video {
-        object-fit: contain;
-    }
 }
 
 #bg-audio {
