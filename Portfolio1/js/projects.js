@@ -1,6 +1,46 @@
 (() => {
     'use strict';
 
+    /* =========================================================
+       VIBRATSIYA (haptic) — karta almashganda foydalanuvchi buni sezadi
+       Kuchi: bu yerdagi millisekundlarni o'zgartirish mumkin (kattaroq = kuchliroq).
+       Diagnostika: sahifa manziliga ?haptic qo'shing (masalan skills.html?haptic) —
+       har bir vibratsiyada ekranda natija (ok / bloklangan / qo'llanmaydi) chiqadi.
+       ========================================================= */
+    const HAPTIC = { card: 60 };
+    const HAPTIC_DEBUG = /[?&](haptic|debug)\b/.test(window.location.search);
+    let hapticToast = null;
+    let hapticToastTimer = 0;
+
+    function showHapticToast(text) {
+        if (!hapticToast) {
+            hapticToast = document.createElement('div');
+            hapticToast.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:2147483647;' +
+                'padding:8px 14px;border-radius:8px;font:13px/1.3 sans-serif;color:#fff;background:rgba(0,0,0,.85);' +
+                'pointer-events:none;max-width:90vw;text-align:center';
+            document.body.appendChild(hapticToast);
+        }
+        hapticToast.textContent = text;
+        hapticToast.style.display = 'block';
+        clearTimeout(hapticToastTimer);
+        hapticToastTimer = setTimeout(() => { hapticToast.style.display = 'none'; }, 1600);
+    }
+
+    function haptic(pattern) {
+        let status;
+        if (!('vibrate' in navigator)) {
+            status = "qo'llanmaydi (brauzer vibratsiyani bermaydi, masalan iPhone Safari)";
+        } else {
+            try {
+                status = navigator.vibrate(pattern) ? 'ok' : "bloklangan (avval sahifaga bir marta tegib ko'ring)";
+            } catch (_) {
+                status = 'xato';
+            }
+        }
+        if (HAPTIC_DEBUG) showHapticToast('vibrate(' + pattern + '): ' + status);
+        return status === 'ok';
+    }
+
     function init() {
         const pageName = (path) => (path.split('/').pop().replace(/\.html$/i, '') || 'index').toLowerCase();
         const currentPage = pageName(window.location.pathname);
@@ -107,9 +147,7 @@
             },
             on: {
                 slideChange: function () {
-                    try {
-                        if ('vibrate' in navigator) navigator.vibrate(30);
-                    } catch (_) { /* e'tiborsiz */ }
+                    haptic(HAPTIC.card);    // har bir karta almashganda
                     syncVideos();
                 }
             }
