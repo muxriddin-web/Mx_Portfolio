@@ -33,9 +33,46 @@
     let deltaX = 0;
     let dragRaf = 0;
 
-    const vibrate = (ms) => {
-        try { if (navigator.vibrate) navigator.vibrate(ms); } catch (_) { /* e'tiborsiz */ }
-    };
+    /* =========================================================
+       VIBRATSIYA (haptic) — karta almashganda foydalanuvchi buni sezadi
+       Kuchi: bu yerdagi millisekundlarni o'zgartirish mumkin (kattaroq = kuchliroq).
+       Diagnostika: sahifa manziliga ?haptic qo'shing (masalan skills.html?haptic) —
+       har bir vibratsiyada ekranda natija (ok / bloklangan / qo'llanmaydi) chiqadi.
+       ========================================================= */
+    const HAPTIC = { start: 40, land: 60 };
+    const HAPTIC_DEBUG = /[?&](haptic|debug)\b/.test(window.location.search);
+    let hapticToast = null;
+    let hapticToastTimer = 0;
+
+    function showHapticToast(text) {
+        if (!hapticToast) {
+            hapticToast = document.createElement('div');
+            hapticToast.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:2147483647;' +
+                'padding:8px 14px;border-radius:8px;font:13px/1.3 sans-serif;color:#fff;background:rgba(0,0,0,.85);' +
+                'pointer-events:none;max-width:90vw;text-align:center';
+            document.body.appendChild(hapticToast);
+        }
+        hapticToast.textContent = text;
+        hapticToast.style.display = 'block';
+        clearTimeout(hapticToastTimer);
+        hapticToastTimer = setTimeout(() => { hapticToast.style.display = 'none'; }, 1600);
+    }
+
+    function haptic(pattern) {
+        let status;
+        if (!('vibrate' in navigator)) {
+            status = "qo'llanmaydi (brauzer vibratsiyani bermaydi, masalan iPhone Safari)";
+        } else {
+            try {
+                status = navigator.vibrate(pattern) ? 'ok' : "bloklangan (avval sahifaga bir marta tegib ko'ring)";
+            } catch (_) {
+                status = 'xato';
+            }
+        }
+        if (HAPTIC_DEBUG) showHapticToast('vibrate(' + pattern + '): ' + status);
+        return status === 'ok';
+    }
+
 
     /* ─── KARTALARNI JOYLASH ─── */
     function layout() {
@@ -103,7 +140,7 @@
 
     function flingOut(card, direction) {
         isAnimating = true;
-        vibrate(30);
+        haptic(HAPTIC.start);   // karta barmoqdan uchib chiqqan zahoti
 
         // Kartani ekrandan tashqariga emas, ekran kengligiga moslab uchiramiz
         const distance = Math.min(300, Math.round(window.innerWidth * 0.8));
@@ -122,7 +159,7 @@
 
             card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             layout();
-            vibrate(50);
+            haptic(HAPTIC.land);    // yangi karta joyiga tushganda
 
             isAnimating = false;
             if (pendingFilter !== null) {
