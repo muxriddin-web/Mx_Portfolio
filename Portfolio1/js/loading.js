@@ -6,7 +6,10 @@
        ========================================================= */
     // M logo endi videoning O'ZIGA joylangan (R o'rniga), shuning uchun sahifada
     // alohida logo/shisha qatlami kerak emas — hamma qurilmada bir xil ko'rinadi.
-    const VIDEO_SRC = './R-loading-M.mp4';
+    // Ikki xil video: telefon (vertikal 720x1280) va kompyuter/gorizontal ekran (1920x1080).
+    const VIDEO_SRC_MOBILE = './R-loading-M.mp4';
+    const VIDEO_SRC_DESKTOP = './R-loading-M-desktop.mp4';
+    const pickVideoSrc = () => (window.innerWidth > window.innerHeight ? VIDEO_SRC_DESKTOP : VIDEO_SRC_MOBILE);
     const START_TIMEOUT_MS = 20000;   // video shu vaqtda boshlanmasa — NEXT tugmasi chiqadi
 
     /* =========================================================
@@ -47,6 +50,7 @@
     let finished = false;
     let watchdogId = 0;
     let srcAssigned = false;
+    let assignedSrc = '';
 
     /* =========================================================
        VIDEONI OLDINDAN YUKLASH
@@ -57,7 +61,8 @@
         const conn = navigator.connection;
         if (conn && conn.saveData) return;
         if (video.getAttribute('src') || video.querySelector('source')) return;
-        video.src = VIDEO_SRC;
+        assignedSrc = pickVideoSrc();
+        video.src = assignedSrc;
         srcAssigned = true;
     }
 
@@ -119,8 +124,11 @@
         button1.textContent = 'Loading...';
         button1.style.pointerEvents = 'none';
 
-        if (!srcAssigned) {
-            video.src = VIDEO_SRC;
+        // Ekran yo'nalishi oldindan yuklashdan keyin o'zgargan bo'lsa (masalan telefon burilsa) — to'g'risini tanlaymiz
+        const wanted = pickVideoSrc();
+        if (!srcAssigned || wanted !== assignedSrc) {
+            assignedSrc = wanted;
+            video.src = wanted;
             srcAssigned = true;
         }
 
